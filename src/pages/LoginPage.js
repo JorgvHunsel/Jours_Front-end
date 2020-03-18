@@ -22,7 +22,32 @@ class LoginPage extends Component {
         })
     }
 
-    handleSubmit = (e) => {}
+    handleSubmit = (e) => {
+        e.preventDefault();
+        fetch('http://localhost:8090/authenticate', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+            })
+        }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.token != null) {
+                    console.log('Gebruiker is ingelogd');
+                    window.sessionStorage.setItem("userToken", data.token);
+
+                    this.props.history.push('/Dashboardpage');
+                }
+                if (data.message === 'Unauthorized') {
+                    console.log('Gebruikersnaam of Wachtwoord komt niet overeen');
+                }
+            });
+    }
 
     render() {
         return (
