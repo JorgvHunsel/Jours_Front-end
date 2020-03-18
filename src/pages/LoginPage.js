@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import auth from '../service/auth'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -39,9 +40,15 @@ class LoginPage extends Component {
                 console.log(data);
                 if (data.token != null) {
                     console.log('Gebruiker is ingelogd');
-                    window.sessionStorage.setItem("userToken", data.token);
+                    // window.sessionStorage.setItem("userToken", data.token);
 
-                    this.props.history.push('/Dashboardpage');
+                    // this.props.history.push('/Dashboardpage');
+
+                    auth.login(() => {
+                        this.props.history.push('/app')
+                    })
+
+
                 }
                 if (data.message === 'Unauthorized') {
                     console.log('Gebruikersnaam of Wachtwoord komt niet overeen');
