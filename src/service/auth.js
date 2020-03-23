@@ -1,12 +1,30 @@
+import decode from 'jwt-decode'
+
 class Auth {
     constructor() {
-        this.authenticated = false;
+        // const token = window.sessionStorage.getItem("usertoken")
+
+        // try {
+        //     const { exp } = decode(token);
+
+
+        //     if (exp < new Date().getTime) {
+        //         this.authenticated = false;
+        //     }
+        // } catch (e) {
+        //     console.log(e)
+        //     return this.authenticated = false;
+        // }
+
+        this.authenticated = true;
     }
+
 
     login(token) {
         window.sessionStorage.setItem("userToken", token);
         window.sessionStorage.setItem("user", this.parseJwt(token).sub)
 
+        console.log(this.parseJwt(token))
         console.log("hier gaat die inloggen:")
         console.log(window.sessionStorage.getItem("userToken"))
         console.log(window.sessionStorage.getItem("user"))
@@ -20,14 +38,11 @@ class Auth {
     }
 
     isAuthenticated() {
-        //this.checkIfAuth()
-
-        return this.authenticated
+        return this.authenticated;
     }
 
 
-
-    checkIfAuth() {
+    async checkIfAuth() {
         console.log(this.authenticated)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -42,6 +57,7 @@ class Auth {
             redirect: 'follow'
         };
 
+
         fetch("http://localhost:8090/isLegit", requestOptions)
             .then(response => response.text())
             .then(
@@ -50,9 +66,8 @@ class Auth {
                     console.log(result)
 
                     if (result) {
-                        this.authenticated = result
+                        this.authenticated = result;
                     }
-                    
                 })
     }
 
