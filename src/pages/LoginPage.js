@@ -37,17 +37,15 @@ class LoginPage extends Component {
             })
         }).then(response => response.json())
             .then(data => {
-                console.log(data);
+               
                 if (data.token != null) {
                     console.log('Gebruiker is ingelogd');
-                    // window.sessionStorage.setItem("userToken", data.token);
-
+               
+            
                     // this.props.history.push('/Dashboardpage');
 
-                    auth.login(() => {
-                        this.props.history.push('/app')
-                    })
-
+                    auth.login(data.token)
+                    this.props.history.push('/app')
 
                 }
                 if (data.message === 'Unauthorized') {

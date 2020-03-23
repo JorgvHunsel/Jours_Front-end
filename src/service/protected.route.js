@@ -6,10 +6,12 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route {...rest} render={
             (props) => {
-                if (auth.isAuthenticated()) {
+                if (auth.isAuthenticated()) {   
+                    console.log("access accepted")    
                     return <Component {...props} />
                 }
                 else {
+                    console.log("access denied")
                     return <Redirect to={
                         {
                             pathname: "/",
