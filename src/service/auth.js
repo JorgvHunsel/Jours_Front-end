@@ -1,33 +1,79 @@
-import decode from 'jwt-decode'
+import jwt from 'jsonwebtoken'
 
 class Auth {
-    constructor() {
-        // const token = window.sessionStorage.getItem("usertoken")
 
+    constructor() {
+        //  const jwt_secret = 'javainuse';
+        //  let token = window.sessionStorage.getItem("userToken")
+
+         
+        //  var decoded = jwt.verify(token, jwt_secret)
+        //  console.log('decoded: ' + decoded)
+        // console.log(decoded.exp)
+
+        // this.authenticated = false;
         // try {
         //     const { exp } = decode(token);
 
 
         //     if (exp < new Date().getTime) {
-        //         this.authenticated = false;
+        //         console.log("correct")
+        //         this.authenticated = true;
         //     }
-        // } catch (e) {
+        // } catch(e) {
         //     console.log(e)
+        //     console.log("niet correct")
         //     return this.authenticated = false;
         // }
 
-        this.authenticated = true;
+        this.authenticated = true
     }
 
 
-    login(token) {
-        window.sessionStorage.setItem("userToken", token);
-        window.sessionStorage.setItem("user", this.parseJwt(token).sub)
 
-        console.log(this.parseJwt(token))
-        console.log("hier gaat die inloggen:")
-        console.log(window.sessionStorage.getItem("userToken"))
-        console.log(window.sessionStorage.getItem("user"))
+
+    // checkIfCorrect(){
+    //     const jwt_secret = 'javainuse';
+    //     let token = window.sessionStorage.getItem("userToken")
+
+
+    //     if (token) {
+
+    //         jwt.verify(token, jwt_secret, function (err, decoded) {
+    //             if (err) {
+    //                 console.log("werkt niet")
+    //                 console.log(err)
+    //                 window.sessionStorage.removeItem("userToken")
+    //                 window.sessionStorage.removeItem("user")
+    //                 token = null;
+    //                 return false;
+
+    //             }
+    //             else {
+    //                 console.log("werkt")
+    //                 console.log(decoded)
+    //                 return true;
+    //             }
+
+    //         })
+
+    //     }
+
+
+    login(data) {
+        window.sessionStorage.clear()
+        window.sessionStorage.setItem("userId", this.parseJwt(data.token).userId)
+        window.sessionStorage.setItem("username", this.parseJwt(data.token).sub)
+        window.sessionStorage.setItem("userToken", data.token);
+
+       
+
+
+
+
+        console.log('userId: ' + window.sessionStorage.getItem("userId"))
+        console.log('username: ' + window.sessionStorage.getItem("username"))
+        console.log('usertoken: ' + window.sessionStorage.getItem("userToken"))
 
         this.authenticated = true;
     }
@@ -38,38 +84,42 @@ class Auth {
     }
 
     isAuthenticated() {
-        return this.authenticated;
+        console.log("watjldsfjlfjnogfonhjsjhj")
+        var output = this.checkIfCorrect()
+        console.log(output)
+
+        return this.checkIfCorrect()
     }
 
 
-    async checkIfAuth() {
-        console.log(this.authenticated)
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+    // async checkIfAuth() {
+    //     console.log(this.authenticated)
+    //     var myHeaders = new Headers();
+    //     myHeaders.append("Content-Type", "application/json");
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: JSON.stringify({
-                username: window.sessionStorage.getItem("user"),
-                token: window.sessionStorage.getItem("userToken")
-            }),
-            redirect: 'follow'
-        };
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         headers: myHeaders,
+    //         body: JSON.stringify({
+    //             username: window.sessionStorage.getItem("user"),
+    //             token: window.sessionStorage.getItem("userToken")
+    //         }),
+    //         redirect: 'follow'
+    //     };
 
 
-        fetch("http://localhost:8090/isLegit", requestOptions)
-            .then(response => response.text())
-            .then(
-                (result) => {
-                    console.log("islegit:")
-                    console.log(result)
+    //     fetch("http://localhost:8090/isLegit", requestOptions)
+    //         .then(response => response.text())
+    //         .then(
+    //             (result) => {
+    //                 console.log("islegit:")
+    //                 console.log(result)
 
-                    if (result) {
-                        this.authenticated = result;
-                    }
-                })
-    }
+    //                 if (result) {
+    //                     this.authenticated = result;
+    //                 }
+    //             })
+    // }
 
     parseJwt(token) {
         var base64Url = token.split('.')[1];

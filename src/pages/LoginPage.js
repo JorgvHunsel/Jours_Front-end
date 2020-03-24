@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import auth from '../service/auth'
+import jwt from 'jsonwebtoken'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -37,14 +38,10 @@ class LoginPage extends Component {
             })
         }).then(response => response.json())
             .then(data => {
-               
                 if (data.token != null) {
-                    console.log('Gebruiker is ingelogd');
-               
-            
-                    // this.props.history.push('/Dashboardpage');
+                    console.log('Gebruiker is ingelogd heeft een valide token');
 
-                    auth.login(data.token)
+                    auth.login(data)
                     this.props.history.push('/app')
 
                 }

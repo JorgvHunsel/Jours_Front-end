@@ -6,7 +6,8 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route {...rest} render={
             (props) => {
-                if (auth.isAuthenticated()) {   
+                //check if isauth
+                if (true) {   
                     console.log("access accepted")    
                     return <Component {...props} />
                 }
@@ -14,7 +15,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
                     console.log("access denied")
                     return <Redirect to={
                         {
-                            pathname: "/",
+                            pathname: "/login",
                             state: {
                                 from: props.location
                             }
