@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
+import {withRouter} from 'react-router-dom';
 
 import CompanyItem from '../components/CompanyOverviewItem';
 import { Row, Container, Col, Button } from 'react-bootstrap';
@@ -35,6 +36,10 @@ class CompanyOverviewPage extends Component {
             })
     }
 
+    HandleAddCompany(){
+        this.props.history.push('/company/create')
+    }
+
 
     render() {
         const { companies } = this.state;
@@ -55,7 +60,7 @@ class CompanyOverviewPage extends Component {
                     <Container>
                         <Row>
                             <Col><Button variant="primary" size="lg" block>Join</Button></Col>
-                            <Col><Button variant="primary" size="lg" block>Add</Button></Col>
+                            <Col><Button variant="primary" size="lg" block onClick={() => this.HandleAddCompany() } >Create</Button></Col>
                         </Row>
                     </Container>
 
