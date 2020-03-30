@@ -35,6 +35,8 @@ class AddCompanyPage extends Component {
             .then(data => {
                 console.log(data)
 
+                
+
                 //this.props.history.push('/app')
             });
     }
@@ -43,7 +45,7 @@ class AddCompanyPage extends Component {
         return (
             <form className="form">
                 <div className="div">
-                    <h3>create company:</h3>
+                    <h3>Create company:</h3>
                     <div className="form-group">
                         <label>Company name:</label>
                         <input required type="text" className="form-control" placeholder="Enter the name of your company" onChange={this.handleCompanyNameChange} />

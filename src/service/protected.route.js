@@ -6,8 +6,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route {...rest} render={
             (props) => {
-                //check if isauth
-                if (true) {   
+                if (window.sessionStorage.getItem("userToken") != null) {   
                     console.log("access accepted")    
                     return <Component {...props} />
                 }
