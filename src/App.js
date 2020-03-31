@@ -9,6 +9,7 @@ import {ProtectedRoute} from './service/protected.route'
 
 import AddCompany from './pages/AddCompanyPage'
 import AllCompanies from './pages/CompanyOverviewPage'
+import DetailCompany from './pages/CompanyDetailPage'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -20,8 +21,9 @@ function App() {
         <Route exact path="/" component={LandingPage}/>
         <ProtectedRoute exact path="/app" component={AppLayout}/>
         <Route path="/login" component={Login} />
-        <Route path="/company/create" component={AddCompany}/>
-        <Route path="/company/all" component={AllCompanies}/>
+        <ProtectedRoute path="/company/create" component={AddCompany}/>
+        <ProtectedRoute path="/company/all" component={AllCompanies}/>
+        <ProtectedRoute path="/company" component={DetailCompany}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>
         </Switch>

@@ -6,10 +6,6 @@ class Auth {
         window.sessionStorage.setItem("userId", this.parseJwt(data.token).userId)
         window.sessionStorage.setItem("username", this.parseJwt(data.token).sub)
         window.sessionStorage.setItem("userToken", data.token);
-
-        console.log('userId: ' + window.sessionStorage.getItem("userId"))
-        console.log('username: ' + window.sessionStorage.getItem("username"))
-        console.log('usertoken: ' + window.sessionStorage.getItem("userToken"))
     }
 
     logout(token) {

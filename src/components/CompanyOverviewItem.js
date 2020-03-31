@@ -26,9 +26,6 @@ function companyItem(props) {
 
             }
         )
-
-
-
     }
 
 
@@ -40,7 +37,6 @@ function companyItem(props) {
                     <Col><Button variant="dark" type="submit">Select</Button></Col>
                 </Row>
                 <Row>
-                    
                 </Row>
             </Container>
         </form>

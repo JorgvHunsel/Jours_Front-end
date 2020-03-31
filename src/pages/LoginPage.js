@@ -42,7 +42,7 @@ class LoginPage extends Component {
                     console.log('Gebruiker is ingelogd heeft een valide token');
 
                     auth.login(data)
-                    this.props.history.push('/app')
+                    this.props.history.push('/company/all')
 
                 }
                 if (data.message === 'Unauthorized') {
