@@ -11,16 +11,19 @@ class CompanyDetailPage extends Component {
     constructor(props) {
         super(props)
 
+
         this.state = {
             projects: [],
-            userId: window.sessionStorage.getItem("userId")
+            userId: window.sessionStorage.getItem("userId"),
+            companyId: props.match.params.companyId
         }
 
-        this.getProjects()
+         this.getProjects()
+         
     }
 
     getProjects() {
-        fetch('http://localhost:8090/project/all/', {
+        fetch('http://localhost:8090/project/all?companyId=' + this.state.companyId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -45,12 +48,14 @@ class CompanyDetailPage extends Component {
                         <Row >
                             <Col><h1>Company detail</h1></Col>
                         </Row>
-                    </Container>
+                    
+                    
                     <CardColumns>
                     {projects.map((item) => (
                         <ProjectItem key={item.id} project={item} />
                     ))}
                     </CardColumns>
+                    </Container>
                 </div>
 
             </React.Fragment >

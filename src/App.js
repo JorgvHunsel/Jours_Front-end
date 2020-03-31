@@ -23,7 +23,7 @@ function App() {
         <Route path="/login" component={Login} />
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
-        <ProtectedRoute path="/company" component={DetailCompany}/>
+        <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>
         </Switch>
