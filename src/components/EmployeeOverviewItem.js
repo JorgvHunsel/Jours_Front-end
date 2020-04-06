@@ -9,7 +9,7 @@ function EmployeeItem(props) {
     return (
         <tr>
             <td>{EmployeeItem.username}</td>
-            <td>Boss</td>
+            <td>{EmployeeItem.role}</td>
         </tr>
     )
 }
