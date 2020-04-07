@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import auth from '../service/auth'
 import jwt from 'jsonwebtoken'
 
+import { Container } from 'react-bootstrap'
+
 class LoginPage extends Component {
     constructor(props) {
         super(props)
@@ -53,6 +55,7 @@ class LoginPage extends Component {
 
     render() {
         return (
+            <Container>
             <form className="form">
                 <div className="div">
                     <h3>Login</h3>
@@ -67,6 +70,7 @@ class LoginPage extends Component {
                     <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Confirm</button>
                 </div>
             </form>
+            </Container>
         );
     }
 }

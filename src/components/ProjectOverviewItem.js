@@ -5,6 +5,9 @@ import { Button, Card } from 'react-bootstrap'
 
 function ProjectItem(props) {
     const projectItem = props.project;
+    const role = props.role;
+
+
 
 
     function handleSubmit(event) {
@@ -28,9 +31,14 @@ function ProjectItem(props) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Card style={{ width: '18rem' }}>
+            <Card>
                 <Card.Title>{projectItem.name}</Card.Title>
-                <Card.Body><Button variant="primary" block>Select</Button></Card.Body>
+                <Card.Body>
+                    <Button variant="success" block>Select</Button>
+                    {role == "admin" &&
+                    <Button variant="secondary" block>Edit</Button>
+                    }                
+                </Card.Body>
                 <Card.Footer>
                     <small className="text-muted">End date: {projectItem.endDate}</small>
                 </Card.Footer>

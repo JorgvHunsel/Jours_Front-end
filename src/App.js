@@ -11,6 +11,7 @@ import {ProtectedRoute} from './service/protected.route'
 import AddCompany from './pages/AddCompanyPage'
 import AllCompanies from './pages/CompanyOverviewPage'
 import DetailCompany from './pages/CompanyDetailPage'
+import AddProject from './pages/AddProjectPage'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ function App() {
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
+        <ProtectedRoute path="/project/create" component={AddProject}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>
         </Switch>

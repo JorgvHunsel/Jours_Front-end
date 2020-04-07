@@ -10,15 +10,15 @@ function companyItem(props) {
     const link = '/company/' + companyItem.id
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card>
             <Card.Title>{companyItem.name}</Card.Title>
             <Card.Body>
                 <Link to={link} ><Button variant="success" block>Select</Button></Link>
             </Card.Body>
             <Card.Footer>
-                {companyItem.userRole == "admin" ?
-                    <Link><Button variant="outline-primary" block>Edit</Button></Link>:
-                    <Link><Button variant="outline-secondary" disabled block>Edit</Button></Link>
+                {companyItem.currentUserRole == "admin" ?
+                    <Link to=""><Button variant="outline-primary" block>Edit</Button></Link>:
+                    <Link to=""><Button variant="outline-secondary" disabled block>Edit</Button></Link>
                 }
             </Card.Footer>
         </Card>

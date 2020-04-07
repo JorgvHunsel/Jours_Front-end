@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import {withRouter} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import ProjectItem from '../components/ProjectOverviewItem';
 import EmployeeItem from '../components/EmployeeOverviewItem';
@@ -17,12 +17,12 @@ class CompanyDetailPage extends Component {
             projects: [],
             employees: [],
             userId: window.sessionStorage.getItem("userId"),
-            companyId: props.match.params.companyId
+            companyId: props.match.params.companyId,
+            userRole: ''
         }
 
-         this.getProjects()
-         this.getEmployees()
-         
+        this.getEmployees()
+        this.getProjects()
     }
 
     getProjects() {
@@ -46,30 +46,35 @@ class CompanyDetailPage extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
+                'userId': + window.sessionStorage.getItem("userId")
             }
         })
             .then(res => res.json()).catch()
             .then((data) => {
-                this.setState({ employees: data })
+                this.setState({ employees: data.usersInCompany })
+                this.setState({ userRole: data.currentUserRole })
             })
     }
 
 
     render() {
-        const { projects, employees } = this.state;
+        const { projects, employees, companyId, userRole } = this.state;
 
         return (
             <React.Fragment>
                 <div>
                     <Container>
-                        <Row ><Col><h1>Company detail</h1></Col></Row>                                 
-                        <Row ><Col><h2>Projects</h2></Col></Row>                                 
-                    <CardColumns>
-                    {projects.map((item) => (
-                        <ProjectItem key={item.id} project={item} />
-                    ))}
-                    </CardColumns>
+                        <Row ><Col><h1>Company detail</h1></Col></Row>
+                        <Row ><Col><h2>Projects</h2></Col></Row>
+                        <CardColumns>
+                            {projects.map((item) => (
+                                <ProjectItem key={item.id} project={item} role={userRole} />
+                            ))}
+                        </CardColumns>
+                        {userRole == "admin" &&
+                        <Link to={{ pathname: '/project/create', state: { companyId } }}><Button variant="primary" size="sm" block>New project</Button></Link>
+                        }
                     </Container>
                 </div>
 
@@ -85,13 +90,12 @@ class CompanyDetailPage extends Component {
                             </thead>
                             <tbody>
                                 {employees.map((item) => (
-                                    <EmployeeItem key={item.id} employee={item}/>
+                                    <EmployeeItem key={item.id} employee={item} />
                                 ))}
                             </tbody>
                         </Table>
                     </Row>
                 </div>
-
             </React.Fragment >
         )
     }

@@ -4,6 +4,7 @@ import {withRouter, Link} from 'react-router-dom';
 
 import CompanyItem from '../components/CompanyOverviewItem';
 import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
+import companyItem from '../components/CompanyOverviewItem';
 
 
 class CompanyOverviewPage extends Component {
@@ -31,12 +32,12 @@ class CompanyOverviewPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 this.setState({ companies: data })
+                
             })
     }
 
     render() {
         const { companies } = this.state;
-
         return (
             <React.Fragment>
                 <div>
