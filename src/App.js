@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Navigation from '../src/components/Navigation'
 import Login from '../src/pages/LoginPage';
 import {LandingPage} from './pages/landingPage'
 import {AppLayout} from './pages/app.layout'
@@ -17,6 +18,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navigation/>
         <Switch>
         <Route exact path="/" component={LandingPage}/>
         <ProtectedRoute exact path="/app" component={AppLayout}/>
