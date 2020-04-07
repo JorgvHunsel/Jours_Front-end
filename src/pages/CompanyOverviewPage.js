@@ -3,7 +3,7 @@ import Table from 'react-bootstrap/Table';
 import {withRouter, Link} from 'react-router-dom';
 
 import CompanyItem from '../components/CompanyOverviewItem';
-import { Row, Container, Col, Button } from 'react-bootstrap';
+import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
 
 
 class CompanyOverviewPage extends Component {
@@ -15,8 +15,6 @@ class CompanyOverviewPage extends Component {
             companies: [],
             userId: window.sessionStorage.getItem("userId")
         }
-
-   
 
         this.getCompanies()
     }
@@ -46,21 +44,18 @@ class CompanyOverviewPage extends Component {
                         <Row >
                             <Col><h1>Company overview</h1></Col>
                         </Row>
-                    </Container>
-
+                    
+                    <CardColumns>
                     {companies.map((item) => (
                         <CompanyItem key={item.id} company={item} />
                     ))}
+                    </CardColumns>
 
-                    <Container>
                         <Row>
                             <Col><Button variant="primary" size="lg" block>Join</Button></Col>
                             <Col><Link to='/company/create'><Button variant="primary" size="lg" block>Create</Button></Link></Col>
                         </Row>
                     </Container>
-
-
-
                 </div>
 
             </React.Fragment >

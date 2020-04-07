@@ -21,8 +21,7 @@ class Navigation extends Component {
                             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
-        
-                    <Link to="/login" ><Button variant="outline-info">Login</Button></Link>
+                    <Link to="/login"><Button variant="outline-info">Login</Button></Link>
                 </Navbar.Collapse>
             </Navbar>
         )

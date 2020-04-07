@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
+import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap'
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
 function companyItem(props) {
     const companyItem = props.company;
@@ -14,14 +10,18 @@ function companyItem(props) {
     const link = '/company/' + companyItem.id
 
     return (
-            <Container>
-                <Row>
-                    <Col><h2>{companyItem.name}</h2></Col>
-                    <Col><Link to={link} ><Button variant="dark" type="submit">Select</Button></Link></Col>
-                </Row>
-                <Row>
-                </Row>
-            </Container>
+        <Card style={{ width: '18rem' }}>
+            <Card.Title>{companyItem.name}</Card.Title>
+            <Card.Body>
+                <Link to={link} ><Button variant="success" block>Select</Button></Link>
+            </Card.Body>
+            <Card.Footer>
+                {companyItem.userRole == "admin" ?
+                    <Link><Button variant="outline-primary" block>Edit</Button></Link>:
+                    <Link><Button variant="outline-secondary" disabled block>Edit</Button></Link>
+                }
+            </Card.Footer>
+        </Card>
     )
 }
 

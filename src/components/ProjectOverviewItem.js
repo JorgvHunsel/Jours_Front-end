@@ -30,7 +30,7 @@ function ProjectItem(props) {
         <form onSubmit={handleSubmit}>
             <Card style={{ width: '18rem' }}>
                 <Card.Title>{projectItem.name}</Card.Title>
-                <Card.Body><Button variant="primary">Select</Button></Card.Body>
+                <Card.Body><Button variant="primary" block>Select</Button></Card.Body>
                 <Card.Footer>
                     <small className="text-muted">End date: {projectItem.endDate}</small>
                 </Card.Footer>
