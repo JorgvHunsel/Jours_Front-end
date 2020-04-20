@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker'
 
 
 import { Row, Container, Col, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { createPortal } from 'react-dom';
 
 class AddWorkPage extends Component {
     constructor(props) {
@@ -13,25 +14,46 @@ class AddWorkPage extends Component {
 
         this.state = {
             companies: [],
+            selectedCompany: '',
             projects: [],
-            projectId: '',
+            selectedProject: '',
             beginDate: new Date(),
             endDate: new Date(),
         }
-
     }
 
-    handleBeginDate(time) {
-        this.setState({
-            beginDate: time
+    componentDidMount() {
+        fetch('http://localhost:8090/company/all/?userId=' + window.sessionStorage.getItem("userId"), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
+            }
         })
+            .then(res => res.json()).catch()
+            .then((data) => {
+                this.setState({ companies: data, selectedCompany: data[0] })
+                console.log(this.state.selectedCompany)
+                this.getProjects(data[0])
+            })
     }
 
-    handleEndDate(time) {
-        this.setState({
-            endDate: time
+    getProjects(company) {
+        fetch('http://localhost:8090/project/all?companyId=' + company.id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
+            }
         })
+            .then(res => res.json()).catch()
+            .then((data) => {
+                this.setState({ projects: data, selectedProject: data[0] })
+            })
     }
+
 
     handleSubmit = (e) => {
         console.log(this.state.beginDate)
@@ -47,7 +69,7 @@ class AddWorkPage extends Component {
             body: JSON.stringify({
                 projectId: 24,
                 beginDate: this.state.beginDate,
-                endDate: this.state.endDate                
+                endDate: this.state.endDate
             })
         }).then(response => response.json())
             .then(data => {
@@ -57,29 +79,59 @@ class AddWorkPage extends Component {
     }
 
     render() {
+        const { companies, projects } = this.state;
+
+        const handleCompanyChange = (company) => {
+            // this.setState({
+            //     selectedCompany: company
+            // })
+            console.log("comp")
+            console.log(company)
+            this.getProjects(company)
+        }
+
+        const handleProjectChange = (project) => {
+            this.setState({
+                selectedProject: project
+            })
+        }
+
+        const handleBeginDate = (time) => {
+            this.setState({
+                beginDate: time
+            })
+        }
+    
+        const handleEndDate = (time) => {
+            this.setState({
+                endDate: time
+            })
+        }
+
         return (
             <React.Fragment>
                 <div>
                     <Container>
                         <Row>
                             <Col>
-                                <Dropdown>
+                                <Dropdown >
                                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>Choose your company</Dropdown.Toggle>
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                    <Dropdown.Menu >
+                                        {companies.map((item) => (
+                                            <Dropdown.Item onClick={() => handleCompanyChange(item)}>{item.name}</Dropdown.Item>
+                                        ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
                             <Col>
                                 <Dropdown>
                                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>Choose your project</Dropdown.Toggle>
-
-                                    <Dropdown.Menu>
-                                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                                    <Dropdown.Menu >
+                                        {projects[0] != null &&
+                                            projects.map((item) => (
+                                                <Dropdown.Item onClick={() => handleProjectChange(item)}>{item.name}</Dropdown.Item>
+                                            ))
+                                        }
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
@@ -101,7 +153,7 @@ class AddWorkPage extends Component {
                                                 timeCaption="Time"
                                                 timeFormat="HH:mm"
                                                 dateFormat="HH:mm"
-                                                onChange={date => this.handleBeginDate(date)} />
+                                                onChange={date => handleBeginDate(date)} />
                                         </div>
                                     </Col>
                                     <Col>
@@ -115,7 +167,7 @@ class AddWorkPage extends Component {
                                                 timeCaption="Time"
                                                 timeFormat="HH:mm"
                                                 dateFormat="HH:mm"
-                                                onChange={date => this.handleEndDate(date)} />                                        </div>
+                                                onChange={date => handleEndDate(date)} />                                        </div>
                                     </Col>
                                 </Row>
 

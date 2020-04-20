@@ -45,13 +45,11 @@ class CompanyOverviewPage extends Component {
                         <Row >
                             <Col><h1>Company overview</h1></Col>
                         </Row>
-                    
                     <CardColumns>
                     {companies.map((item) => (
                         <CompanyItem key={item.id} company={item} />
                     ))}
                     </CardColumns>
-
                         <Row>
                             <Col><Button variant="primary" size="lg" block>Join</Button></Col>
                             <Col><Link to='/company/create'><Button variant="primary" size="lg" block>Create</Button></Link></Col>
