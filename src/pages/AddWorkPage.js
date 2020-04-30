@@ -4,15 +4,16 @@ import jwt from 'jsonwebtoken'
 
 import DatePicker from 'react-datepicker'
 
+import { Dot } from 'react-bootstrap-icons'
 
 import { Row, Container, Col, Button, Dropdown, DropdownButton } from 'react-bootstrap';
-import { createPortal } from 'react-dom';
 
 class AddWorkPage extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            unfinishedWork: null,
             companies: [],
             selectedCompany: '',
             companyPlaceholder: 'Choose your company',
@@ -25,6 +26,26 @@ class AddWorkPage extends Component {
     }
 
     componentDidMount() {
+        this.getCompaniesFromUser()
+        this.getUnfinishedWork()
+    }
+
+    getUnfinishedWork() {
+        fetch('http://localhost:8090/work/clock', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
+            }
+        })
+            .then(res => res.json()).catch()
+            .then((data) => {
+                this.setState({ unfinishedWork: data })
+            })
+    }
+
+    getCompaniesFromUser() {
         fetch('http://localhost:8090/company/all/?userId=' + window.sessionStorage.getItem("userId"), {
             method: 'GET',
             headers: {
@@ -35,9 +56,8 @@ class AddWorkPage extends Component {
         })
             .then(res => res.json()).catch()
             .then((data) => {
-                this.setState({ companies: data, selectedCompany: data[0] })
+                this.setState({ companies: data })
                 console.log(this.state.selectedCompany)
-                this.getProjects(data[0])
             })
     }
 
@@ -52,13 +72,48 @@ class AddWorkPage extends Component {
         })
             .then(res => res.json()).catch()
             .then((data) => {
-                this.setState({ projects: data, selectedProject: data[0] })
+                var placeHolder = 'Choose your project'
+                if (data[0] == null) {
+                    placeHolder = 'No projects'
+                }
+
+                this.setState({ projects: data, projectPlaceHolder: placeHolder })
             })
     }
 
+    handleClockIn() {
+        this.setState({ endDate: null }, () => {
+            this.addWork()
+        })
+    }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+    handleClockOut() {
+        fetch('http://localhost:8090/work/update', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
+            },
+            body: JSON.stringify({
+                workId: this.state.unfinishedWork.id
+            })
+        }).then(response => response.json())
+            .then(data => {
+                window.alert("Succes")
+                this.setState({ unfinishedWork: null })
+            });
+
+
+    }
+
+
+    addWork() {
+        if (this.state.selectedProject == '') {
+            window.alert("Select a project first")
+            return
+        }
+
         fetch('http://localhost:8090/work/add', {
             method: 'POST',
             headers: {
@@ -74,7 +129,8 @@ class AddWorkPage extends Component {
         }).then(response => response.json())
             .then(data => {
                 console.log(data)
-                this.props.history.push('/company/all')
+                window.alert("Work added!")
+                this.getUnfinishedWork()
             });
     }
 
@@ -82,14 +138,14 @@ class AddWorkPage extends Component {
         const { companies, projects } = this.state;
 
         const handleCompanyChange = (company) => {
-            this.setState({ selectedCompany: company, companyPlaceholder: company.name }, () => {
+            this.setState({ selectedCompany: company, selectedProject: '', companyPlaceholder: company.name }, () => {
                 this.getProjects()
                 console.log(this.state.selectedCompany)
             })
         }
 
         const handleProjectChange = (project) => {
-            this.setState({selectedProject: project, projectPlaceHolder: project.name}, () => { console.log(this.state.selectedProject) })
+            this.setState({ selectedProject: project, projectPlaceHolder: project.name }, () => { console.log(this.state.selectedProject) })
         }
 
         const handleBeginDate = (time) => {
@@ -110,11 +166,12 @@ class AddWorkPage extends Component {
                     <Container>
                         <Row>
                             <Col>
+                    
                                 <Dropdown >
                                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.companyPlaceholder}</Dropdown.Toggle>
                                     <Dropdown.Menu >
                                         {companies.map((item) => (
-                                            <Dropdown.Item onClick={() => handleCompanyChange(item)}>{item.name}</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => handleCompanyChange(item)}><Dot></Dot> {item.name}</Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
@@ -122,18 +179,21 @@ class AddWorkPage extends Component {
                             <Col>
                                 <Dropdown>
                                     <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.projectPlaceHolder}</Dropdown.Toggle>
-                                    <Dropdown.Menu >
-                                        {projects[0] != null &&
-                                            projects.map((item) => (
-                                                <Dropdown.Item onClick={() => handleProjectChange(item)}>{item.name}</Dropdown.Item>
-                                            ))
-                                        }
-                                    </Dropdown.Menu>
+                                    {projects[0] != null &&
+                                        <Dropdown.Menu >
+                                            {projects.map((item) => (
+                                                <Dropdown.Item onClick={() => handleProjectChange(item)}><Dot></Dot> {item.name}</Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    }
                                 </Dropdown>
                             </Col>
                         </Row>
                         <Row><Col><h3>Add work:</h3></Col></Row>
-                        <Row><Col><Button block>Clock in</Button></Col></Row>
+                        {this.state.unfinishedWork == null ?
+                            <Row><Col><Button variant="success" onClick={() => this.handleClockIn()} block>Clock in</Button></Col></Row> :
+                            <Row><Col><Button variant="danger" onClick={() => this.handleClockOut()} block>Clock out</Button></Col></Row>
+                        }
                         <Row><Col><h3>Add work manually:</h3></Col></Row>
                         <form className="form">
                             <div className="div">
@@ -149,7 +209,7 @@ class AddWorkPage extends Component {
                                                 timeCaption="Time"
                                                 timeFormat="HH:mm"
                                                 dateFormat="HH:mm"
-                                                onChange={date => handleBeginDate(date)} />
+                                                onChange={date => handleBeginDate(date)}/>
                                         </div>
                                     </Col>
                                     <Col>
@@ -166,8 +226,7 @@ class AddWorkPage extends Component {
                                                 onChange={date => handleEndDate(date)} />                                        </div>
                                     </Col>
                                 </Row>
-
-                                <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Confirm</button>
+                                <Button className="btn btn-primary btn-block" onClick={() => this.addWork()}>Confirm</Button>
                             </div>
                         </form>
 
