@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import {withRouter, Link} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import CompanyItem from '../components/CompanyOverviewItem';
 import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
@@ -32,7 +32,7 @@ class CompanyOverviewPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 this.setState({ companies: data })
-                
+
             })
     }
 
@@ -45,15 +45,11 @@ class CompanyOverviewPage extends Component {
                         <Row >
                             <Col><h1>Company overview</h1></Col>
                         </Row>
-                    <CardColumns>
-                    {companies.map((item) => (
-                        <CompanyItem key={item.id} company={item} />
-                    ))}
-                    </CardColumns>
-                        <Row>
-                            <Col><Button variant="primary" size="lg" block>Join</Button></Col>
-                            <Col><Link to='/company/create'><Button variant="primary" size="lg" block>Create</Button></Link></Col>
-                        </Row>
+                        <CardColumns>
+                            {companies.map((item) => (
+                                <CompanyItem key={item.id} company={item} />
+                            ))}
+                        </CardColumns>
                     </Container>
                 </div>
 

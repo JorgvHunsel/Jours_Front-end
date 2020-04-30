@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-
 class Auth {
     login(data) {
         window.sessionStorage.clear()
@@ -8,7 +6,7 @@ class Auth {
         window.sessionStorage.setItem("userToken", data.token);
     }
 
-    logout(token) {
+    logout() {
         window.sessionStorage.removeItem("userId")
         window.sessionStorage.removeItem("username")
         window.sessionStorage.removeItem("userToken")

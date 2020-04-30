@@ -63,8 +63,9 @@ class CompanyDetailPage extends Component {
 
         return (
             <React.Fragment>
+                <Container>
                 <div>
-                    <Container>
+                    
                         <Row ><Col><h1>Company detail</h1></Col></Row>
                         <Row ><Col><h2>Projects</h2></Col></Row>
                         <CardColumns>
@@ -75,13 +76,13 @@ class CompanyDetailPage extends Component {
                         {userRole == "admin" &&
                         <Link to={{ pathname: '/project/create', state: { companyId } }}><Button variant="primary" size="sm" block>New project</Button></Link>
                         }
-                    </Container>
+                    
                 </div>
 
                 <div>
                     <Row>
                         <Col><h2>Employees</h2></Col>
-                        <Table>
+                        <Table variant="dark">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -96,6 +97,7 @@ class CompanyDetailPage extends Component {
                         </Table>
                     </Row>
                 </div>
+                </Container>
             </React.Fragment >
         )
     }

@@ -1,6 +1,10 @@
-import React, { Component }  from 'react';
-import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+
+import  auth  from '../service/auth'
+
+import {ListUl, Plus, PersonPlus} from 'react-bootstrap-icons'
 
 
 class Navigation extends Component {
@@ -12,17 +16,18 @@ class Navigation extends Component {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/company/all">Companies</Nav.Link>
-                        <Nav.Link href="/work/add">Add work</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        <NavDropdown title="Company" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/company/all"><ListUl></ListUl> Overview</NavDropdown.Item>
+                            <NavDropdown.Item href="/company/create"><Plus></Plus> Create</NavDropdown.Item>
+                            <NavDropdown.Item disabled href="#action/3.3"><PersonPlus></PersonPlus> Join</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link href="/work/add">Add work</Nav.Link>
                     </Nav>
-                    <Link to="/login"><Button variant="outline-info">Login</Button></Link>
+                    {window.sessionStorage.getItem("userToken") == null ?
+                        <Link to="/login"><Button variant="outline-info">Login</Button></Link>:
+                        <Button onClick={() => auth.logout()} variant="outline-info">Logout</Button>
+                    }
+
                 </Navbar.Collapse>
             </Navbar>
         )

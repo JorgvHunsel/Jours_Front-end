@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import auth from '../service/auth'
 import jwt from 'jsonwebtoken'
 
+import { Container } from 'react-bootstrap'
+
 class AddCompanyPage extends Component {
     constructor(props) {
         super(props)
@@ -40,6 +42,7 @@ class AddCompanyPage extends Component {
 
     render() {
         return (
+            <Container>
             <form className="form">
                 <div className="div">
                     <h3>Create company:</h3>
@@ -50,6 +53,7 @@ class AddCompanyPage extends Component {
                     <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Confirm</button>
                 </div>
             </form>
+            </Container>
         );
     }
 }
