@@ -15,8 +15,10 @@ class AddWorkPage extends Component {
         this.state = {
             companies: [],
             selectedCompany: '',
+            companyPlaceholder: 'Choose your company',
             projects: [],
             selectedProject: '',
+            projectPlaceHolder: 'Choose your project',
             beginDate: new Date(),
             endDate: new Date(),
         }
@@ -39,8 +41,8 @@ class AddWorkPage extends Component {
             })
     }
 
-    getProjects(company) {
-        fetch('http://localhost:8090/project/all?companyId=' + company.id, {
+    getProjects() {
+        fetch('http://localhost:8090/project/all?companyId=' + this.state.selectedCompany.id, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -56,8 +58,6 @@ class AddWorkPage extends Component {
 
 
     handleSubmit = (e) => {
-        console.log(this.state.beginDate)
-        console.log(auth)
         e.preventDefault();
         fetch('http://localhost:8090/work/add', {
             method: 'POST',
@@ -67,7 +67,7 @@ class AddWorkPage extends Component {
                 'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
             },
             body: JSON.stringify({
-                projectId: 24,
+                projectId: this.state.selectedProject.id,
                 beginDate: this.state.beginDate,
                 endDate: this.state.endDate
             })
@@ -82,18 +82,14 @@ class AddWorkPage extends Component {
         const { companies, projects } = this.state;
 
         const handleCompanyChange = (company) => {
-            // this.setState({
-            //     selectedCompany: company
-            // })
-            console.log("comp")
-            console.log(company)
-            this.getProjects(company)
+            this.setState({ selectedCompany: company, companyPlaceholder: company.name }, () => {
+                this.getProjects()
+                console.log(this.state.selectedCompany)
+            })
         }
 
         const handleProjectChange = (project) => {
-            this.setState({
-                selectedProject: project
-            })
+            this.setState({selectedProject: project, projectPlaceHolder: project.name}, () => { console.log(this.state.selectedProject) })
         }
 
         const handleBeginDate = (time) => {
@@ -101,7 +97,7 @@ class AddWorkPage extends Component {
                 beginDate: time
             })
         }
-    
+
         const handleEndDate = (time) => {
             this.setState({
                 endDate: time
@@ -115,7 +111,7 @@ class AddWorkPage extends Component {
                         <Row>
                             <Col>
                                 <Dropdown >
-                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>Choose your company</Dropdown.Toggle>
+                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.companyPlaceholder}</Dropdown.Toggle>
                                     <Dropdown.Menu >
                                         {companies.map((item) => (
                                             <Dropdown.Item onClick={() => handleCompanyChange(item)}>{item.name}</Dropdown.Item>
@@ -125,7 +121,7 @@ class AddWorkPage extends Component {
                             </Col>
                             <Col>
                                 <Dropdown>
-                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>Choose your project</Dropdown.Toggle>
+                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.projectPlaceHolder}</Dropdown.Toggle>
                                     <Dropdown.Menu >
                                         {projects[0] != null &&
                                             projects.map((item) => (

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import  auth  from '../service/auth'
 
-import {ListUl, Plus, PersonPlus} from 'react-bootstrap-icons'
+import {ListUl, Plus, PersonPlus, PersonFill} from 'react-bootstrap-icons'
 
 
 class Navigation extends Component {
