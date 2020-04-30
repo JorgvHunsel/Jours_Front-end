@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import auth from '../service/auth'
 import jwt from 'jsonwebtoken'
 
-import { Container } from 'react-bootstrap'
+import { Container, Button, InputGroup, FormControl, Alert } from 'react-bootstrap'
+import { Check } from 'react-bootstrap-icons'
 
 class LoginPage extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class LoginPage extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            showError: false
         }
     }
 
@@ -26,7 +28,7 @@ class LoginPage extends Component {
         })
     }
 
-    handleSubmit = (e) => {
+    handleLogin = (e) => {
         e.preventDefault();
         fetch('http://localhost:8090/authenticate', {
             method: 'POST',
@@ -48,6 +50,7 @@ class LoginPage extends Component {
 
                 }
                 if (data.message === 'Unauthorized') {
+                    this.setState({showError: true})
                     console.log('Gebruikersnaam of Wachtwoord komt niet overeen');
                 }
             });
@@ -55,21 +58,30 @@ class LoginPage extends Component {
 
     render() {
         return (
+            
             <Container>
-            <form className="form">
                 <div className="div">
                     <h3>Login</h3>
-                    <div className="form-group">
-                        <label>Username:</label>
-                        <input required type="text" className="form-control" placeholder="Enter your username" onChange={this.handleUsernameChange} />
-                    </div>
-                    <div className="form-group">
-                        <label>Password:</label>
-                        <input required type="password" className="form-control" placeholder="Vul uw wachtwoord in" onChange={this.handlePasswordChange} />
-                    </div>
-                    <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Confirm</button>
+                    <InputGroup size="lg">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="inputGroup-sizing-lg">Username</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleUsernameChange} />
+                    </InputGroup>
+                    <br />
+                    <InputGroup size="lg">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text id="inputGroup-sizing-lg">Password</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl type="password" aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handlePasswordChange} />
+                    </InputGroup>
+                    <br />
+                    <Button className="btn btn-primary btn-block" onClick={this.handleLogin} size="lg"><Check /></Button>
+                    <br/>
+                {this.state.showError &&
+                <Alert variant="danger">Login failed</Alert>
+                }
                 </div>
-            </form>
             </Container>
         );
     }

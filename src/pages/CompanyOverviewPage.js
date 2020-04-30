@@ -43,7 +43,7 @@ class CompanyOverviewPage extends Component {
                 <div>
                     <Container>
                         <Row >
-                            <Col><h1>Company overview</h1></Col>
+                            <Col><h1>Overview Companies</h1></Col>
                         </Row>
                         <CardColumns>
                             {companies.map((item) => (

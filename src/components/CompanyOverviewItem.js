@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap'
+import { Pencil, BoxArrowInRight } from 'react-bootstrap-icons'
 
 
 function companyItem(props) {
@@ -13,14 +14,20 @@ function companyItem(props) {
         <Card>
             <Card.Title>{companyItem.name}</Card.Title>
             <Card.Body>
-                <Link to={link} ><Button variant="success" block>Select</Button></Link>
+                <Row>
+                    <Col>
+                        <Link to={link} ><Button variant="success" block><BoxArrowInRight/></Button></Link>
+                    </Col>
+                    <Col>
+                        {companyItem.currentUserRole == "admin" ?
+                            <Link to=""><Button variant="outline-primary" block><Pencil /></Button></Link> :
+                            <Link to=""><Button variant="outline-secondary" disabled block><Pencil /></Button></Link>
+                        }
+                    </Col>
+
+                </Row>
+
             </Card.Body>
-            <Card.Footer>
-                {companyItem.currentUserRole == "admin" ?
-                    <Link to=""><Button variant="outline-primary" block>Edit</Button></Link>:
-                    <Link to=""><Button variant="outline-secondary" disabled block>Edit</Button></Link>
-                }
-            </Card.Footer>
         </Card>
     )
 }
