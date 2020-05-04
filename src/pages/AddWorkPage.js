@@ -14,19 +14,16 @@ class AddWorkPage extends Component {
 
         this.state = {
             unfinishedWork: null,
-            companies: [],
-            selectedCompany: '',
-            companyPlaceholder: 'Choose your company',
-            projects: [],
-            selectedProject: '',
-            projectPlaceHolder: 'Choose your project',
+            selectedTask: '',
+            tasks: [],
+            taskPlaceholder: 'select your task',
             beginDate: new Date(),
             endDate: new Date(),
         }
     }
 
     componentDidMount() {
-        this.getCompaniesFromUser()
+        this.getTasksFromUser()
         this.getUnfinishedWork()
     }
 
@@ -45,8 +42,8 @@ class AddWorkPage extends Component {
             })
     }
 
-    getCompaniesFromUser() {
-        fetch('http://localhost:8090/company/all/?userId=' + window.sessionStorage.getItem("userId"), {
+    getTasksFromUser() {
+        fetch('http://localhost:8090/user/tasks', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -56,30 +53,12 @@ class AddWorkPage extends Component {
         })
             .then(res => res.json()).catch()
             .then((data) => {
-                this.setState({ companies: data })
-                console.log(this.state.selectedCompany)
+                console.log(data)
+                this.setState({ tasks: data })
             })
     }
 
-    getProjects() {
-        fetch('http://localhost:8090/project/all?companyId=' + this.state.selectedCompany.id, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
-        })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                var placeHolder = 'Choose your project'
-                if (data[0] == null) {
-                    placeHolder = 'No projects'
-                }
 
-                this.setState({ projects: data, projectPlaceHolder: placeHolder })
-            })
-    }
 
     handleClockIn() {
         this.setState({ endDate: null }, () => {
@@ -103,14 +82,12 @@ class AddWorkPage extends Component {
                 window.alert("Succes")
                 this.setState({ unfinishedWork: null })
             });
-
-
     }
 
 
     addWork() {
-        if (this.state.selectedProject == '') {
-            window.alert("Select a project first")
+        if (this.state.selectedTask == '') {
+            window.alert("Select a task first")
             return
         }
 
@@ -122,7 +99,7 @@ class AddWorkPage extends Component {
                 'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
             },
             body: JSON.stringify({
-                projectId: this.state.selectedProject.id,
+                taskId: this.state.selectedTask.id,
                 beginDate: this.state.beginDate,
                 endDate: this.state.endDate
             })
@@ -135,17 +112,10 @@ class AddWorkPage extends Component {
     }
 
     render() {
-        const { companies, projects } = this.state;
+        const { tasks } = this.state;
 
-        const handleCompanyChange = (company) => {
-            this.setState({ selectedCompany: company, selectedProject: '', companyPlaceholder: company.name }, () => {
-                this.getProjects()
-                console.log(this.state.selectedCompany)
-            })
-        }
-
-        const handleProjectChange = (project) => {
-            this.setState({ selectedProject: project, projectPlaceHolder: project.name }, () => { console.log(this.state.selectedProject) })
+        const handleTaskChange = (task) => {
+            this.setState({ selectedTask: task, taskPlaceholder: task.name })
         }
 
         const handleBeginDate = (time) => {
@@ -166,26 +136,13 @@ class AddWorkPage extends Component {
                     <Container>
                         <Row>
                             <Col>
-                    
                                 <Dropdown >
-                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.companyPlaceholder}</Dropdown.Toggle>
+                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.taskPlaceholder}</Dropdown.Toggle>
                                     <Dropdown.Menu >
-                                        {companies.map((item) => (
-                                            <Dropdown.Item onClick={() => handleCompanyChange(item)}><Dot></Dot> {item.name}</Dropdown.Item>
+                                        {tasks.map((item) => (
+                                            <Dropdown.Item onClick={() => handleTaskChange(item)}><Dot></Dot>{item.name}</Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
-                                </Dropdown>
-                            </Col>
-                            <Col>
-                                <Dropdown>
-                                    <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>{this.state.projectPlaceHolder}</Dropdown.Toggle>
-                                    {projects[0] != null &&
-                                        <Dropdown.Menu >
-                                            {projects.map((item) => (
-                                                <Dropdown.Item onClick={() => handleProjectChange(item)}><Dot></Dot> {item.name}</Dropdown.Item>
-                                            ))}
-                                        </Dropdown.Menu>
-                                    }
                                 </Dropdown>
                             </Col>
                         </Row>
@@ -209,7 +166,7 @@ class AddWorkPage extends Component {
                                                 timeCaption="Time"
                                                 timeFormat="HH:mm"
                                                 dateFormat="HH:mm"
-                                                onChange={date => handleBeginDate(date)}/>
+                                                onChange={date => handleBeginDate(date)} />
                                         </div>
                                     </Col>
                                     <Col>
