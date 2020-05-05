@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import ProjectItem from '../components/ProjectOverviewItem';
 import EmployeeItem from '../components/EmployeeOverviewItem';
-import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
+import { Row, Container, Col, Button, CardColumns, CardDeck } from 'react-bootstrap';
 import {PlusCircle} from 'react-bootstrap-icons'
 
 
@@ -70,7 +70,7 @@ class CompanyDetailPage extends Component {
                         <Row><Col><h2>Projects</h2></Col></Row>
                         <CardColumns>
                             {projects.map((item) => (
-                                <ProjectItem key={item.id} project={item} role={userRole} />
+                                <ProjectItem companyId={this.state.companyId} key={item.id} project={item} role={userRole} />
                             ))}
                         </CardColumns>
                         {userRole == "admin" &&

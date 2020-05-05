@@ -41,16 +41,12 @@ class CompanyOverviewPage extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <Container>
-                        <Row >
-                            <Col><h1>Overview Companies</h1></Col>
-                        </Row>
-                        <CardColumns>
-                            {companies.map((item) => (
-                                <CompanyItem key={item.id} company={item} />
-                            ))}
-                        </CardColumns>
-                    </Container>
+                    <Row >
+                        <Col><h1>Your companies</h1></Col>
+                    </Row>
+                    {companies.map((item) => (
+                        <CompanyItem key={item.id} company={item} />
+                    ))}
                 </div>
 
             </React.Fragment >

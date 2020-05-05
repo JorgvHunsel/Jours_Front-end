@@ -2,13 +2,34 @@ import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap'
-import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons'
+import { ArrowLeft, ArrowRight, Trash } from 'react-bootstrap-icons'
 
 
 function taskItem(props) {
     const taskItem = props.task;
 
     const link = '/task/' + taskItem.id
+
+
+    function changeTaskStatus(direction){
+        fetch('http://localhost:8090/task/status', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
+            },
+            body: JSON.stringify({
+                taskId: taskItem.id,
+                status: taskItem.status,
+                direction: direction
+            })
+        }).then(response => {
+                props.update()
+            });
+    }
+        
+
 
     return (
         <Card>
@@ -18,13 +39,13 @@ function taskItem(props) {
                 <Row>
                     <Col>
                         {taskItem.status != "to do" &&
-                            <Button variant="success" block><ArrowLeft /></Button>
+                            <Button onClick={() => changeTaskStatus(false)} variant="outline-success" block><ArrowLeft /></Button>
                         }
-
                     </Col>
                     <Col>
-                    {taskItem.status != "done" &&
-                    <Button variant="success" block><ArrowRight /></Button>
+                    {taskItem.status != "done" ?
+                    <Button onClick={() => changeTaskStatus(true)} variant="outline-success" block><ArrowRight /></Button>:
+                    <Button onClick={() => changeTaskStatus(true)} variant="outline-danger" block><Trash /></Button>
                     }
                     </Col>
                 </Row>

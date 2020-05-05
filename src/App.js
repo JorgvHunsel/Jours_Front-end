@@ -28,9 +28,9 @@ function App() {
         <Route path="/login" component={Login} />
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
+        <ProtectedRoute name="projectDetail" path="/company/:companyId/project/:projectId" component={DetailProject}/>
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
         <ProtectedRoute path="/project/create" component={AddProject}/>
-        <ProtectedRoute name="projectDetail" path="/project/:projectId" component={DetailProject}/>
         <ProtectedRoute path="/work/add" component={AddWork}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>

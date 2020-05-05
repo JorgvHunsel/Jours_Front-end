@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
-import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap'
+import { Container, Row, Col, Button, Form, Card, Jumbotron } from 'react-bootstrap'
 import { Pencil, BoxArrowInRight } from 'react-bootstrap-icons'
 
 
@@ -11,24 +11,17 @@ function companyItem(props) {
     const link = '/company/' + companyItem.id
 
     return (
-        <Card>
-            <Card.Title>{companyItem.name}</Card.Title>
-            <Card.Body>
-                <Row>
-                    <Col>
-                        <Link to={link} ><Button variant="success" block><BoxArrowInRight/></Button></Link>
-                    </Col>
+        <Jumbotron>
+            <Row><Col><Link to={link} ><h1>{companyItem.name}</h1></Link></Col></Row>
+            <Row>
                     <Col>
                         {companyItem.currentUserRole == "admin" ?
-                            <Link to=""><Button variant="outline-primary" block><Pencil /></Button></Link> :
-                            <Link to=""><Button variant="outline-secondary" disabled block><Pencil /></Button></Link>
+                            <Link to=""><Button variant="outline-success" size="lg" ><Pencil /></Button></Link> :
+                            <Button variant="outline-secondary" size="lg" disabled ><Pencil /></Button>
                         }
                     </Col>
-
                 </Row>
-
-            </Card.Body>
-        </Card>
+        </Jumbotron>
     )
 }
 

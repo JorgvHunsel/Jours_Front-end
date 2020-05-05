@@ -9,7 +9,7 @@ function ProjectItem(props) {
     const projectItem = props.project;
     const role = props.role;
 
-    const projectLink = '/project/' + projectItem.id
+    const projectLink = '/company/' + props.companyId +  '/project/' + projectItem.id
 
 
     function handleSubmit(event) {

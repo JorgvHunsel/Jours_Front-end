@@ -14,8 +14,9 @@ class ProjectDetailPage extends Component {
     constructor(props) {
         super(props)
 
-
+        console.log(props.match.params)
         this.state = {
+            companyId: props.match.params.companyId,
             projectId: props.match.params.projectId,
             userRole: '',
             tasks: [],
@@ -45,7 +46,7 @@ class ProjectDetailPage extends Component {
     render() {
         const { userRole, tasks, workList } = this.state;
 
-        const filterByState = (filterValue) => {
+        const filterTasksByStatus = (filterValue) => {
             
             var newtask = tasks.filter((item) => {
                 return item.status == filterValue
@@ -64,8 +65,8 @@ class ProjectDetailPage extends Component {
                                 <Table>
                                     <thead><tr><th>To do</th></tr></thead>
                                     <tbody>
-                                        {filterByState("to do").map((item) => (
-                                            <tr key={item.id}><td><TaskItem key={item.id} task={item} /></td></tr>
+                                        {filterTasksByStatus("to do").map((item) => (
+                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
@@ -74,8 +75,8 @@ class ProjectDetailPage extends Component {
                                 <Table>
                                     <thead><tr><th>Doing</th></tr></thead>
                                     <tbody>
-                                        {filterByState("doing").map((item) => (
-                                            <tr key={item.id}><td><TaskItem key={item.id} task={item} /></td></tr>
+                                        {filterTasksByStatus("doing").map((item) => (
+                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
@@ -84,8 +85,8 @@ class ProjectDetailPage extends Component {
                                 <Table>
                                     <thead><tr><th>Done</th></tr></thead>
                                     <tbody>
-                                        {filterByState("done").map((item) => (
-                                            <tr key={item.id}><td><TaskItem key={item.id} task={item} /></td></tr>
+                                        {filterTasksByStatus("done").map((item) => (
+                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
@@ -94,7 +95,7 @@ class ProjectDetailPage extends Component {
                     </div>
                     <div>
                         <Row>
-                            <Col><h2>Log</h2></Col>
+                            <Col><h2>Work log</h2></Col>
                             <Table variant="dark">
                                 <thead>
                                     <tr>
