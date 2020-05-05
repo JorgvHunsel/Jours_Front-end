@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { Link } from 'react-router-dom'
 import { Button, Card, Row, Col } from 'react-bootstrap'
 import { BoxArrowInRight, Pencil} from 'react-bootstrap-icons'
 
@@ -8,7 +9,7 @@ function ProjectItem(props) {
     const projectItem = props.project;
     const role = props.role;
 
-
+    const projectLink = '/project/' + projectItem.id
 
 
     function handleSubmit(event) {
@@ -37,7 +38,7 @@ function ProjectItem(props) {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <Button variant="success" block><BoxArrowInRight/></Button>
+                            <Link to={projectLink}><Button variant="success" block><BoxArrowInRight/></Button></Link>
                         </Col>
                         {role == "admin" &&
                             <Col><Button variant="secondary" block><Pencil/></Button></Col>

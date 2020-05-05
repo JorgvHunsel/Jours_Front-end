@@ -11,6 +11,7 @@ import {ProtectedRoute} from './service/protected.route'
 import AddCompany from './pages/AddCompanyPage'
 import AllCompanies from './pages/CompanyOverviewPage'
 import DetailCompany from './pages/CompanyDetailPage'
+import DetailProject from './pages/ProjectDetailPage'
 import AddProject from './pages/AddProjectPage'
 import AddWork from './pages/AddWorkPage'
 
@@ -29,6 +30,7 @@ function App() {
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
         <ProtectedRoute path="/project/create" component={AddProject}/>
+        <ProtectedRoute name="projectDetail" path="/project/:projectId" component={DetailProject}/>
         <ProtectedRoute path="/work/add" component={AddWork}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>
