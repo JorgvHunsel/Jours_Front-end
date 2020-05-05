@@ -7,11 +7,12 @@ import { ArrowLeft, ArrowRight, Trash } from 'react-bootstrap-icons'
 
 function taskItem(props) {
     const taskItem = props.task;
+    const userRole = props.userRole;
 
     const link = '/task/' + taskItem.id
 
 
-    function changeTaskStatus(direction){
+    function changeTaskStatus(direction) {
         fetch('http://localhost:8090/task/status', {
             method: 'POST',
             headers: {
@@ -25,10 +26,10 @@ function taskItem(props) {
                 direction: direction
             })
         }).then(response => {
-                props.update()
-            });
+            props.update()
+        });
     }
-        
+
 
 
     return (
@@ -36,19 +37,21 @@ function taskItem(props) {
             <Card.Body>
                 <Card.Title>{taskItem.name}</Card.Title>
                 <Card.Text>{taskItem.description.substring(0, 20)}..</Card.Text>
-                <Row>
-                    <Col>
-                        {taskItem.status != "to do" &&
-                            <Button onClick={() => changeTaskStatus(false)} variant="outline-success" block><ArrowLeft /></Button>
-                        }
-                    </Col>
-                    <Col>
-                    {taskItem.status != "done" ?
-                    <Button onClick={() => changeTaskStatus(true)} variant="outline-success" block><ArrowRight /></Button>:
-                    <Button onClick={() => changeTaskStatus(true)} variant="outline-danger" block><Trash /></Button>
-                    }
-                    </Col>
-                </Row>
+                {userRole == "admin" &&
+                    <Row>
+                        <Col>
+                            {taskItem.status != "to do" &&
+                                <Button onClick={() => changeTaskStatus(false)} variant="outline-success" block><ArrowLeft /></Button>
+                            }
+                        </Col>
+                        <Col>
+                            {taskItem.status != "done" ?
+                                <Button onClick={() => changeTaskStatus(true)} variant="outline-success" block><ArrowRight /></Button> :
+                                <Button onClick={() => changeTaskStatus(true)} variant="outline-danger" block><Trash /></Button>
+                            }
+                        </Col>
+                    </Row>
+                }
             </Card.Body>
         </Card>
     )

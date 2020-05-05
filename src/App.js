@@ -14,6 +14,7 @@ import DetailCompany from './pages/CompanyDetailPage'
 import DetailProject from './pages/ProjectDetailPage'
 import AddProject from './pages/AddProjectPage'
 import AddWork from './pages/AddWorkPage'
+import AddTask from './pages/AddTaskPage'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -32,6 +33,7 @@ function App() {
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
         <ProtectedRoute path="/project/create" component={AddProject}/>
         <ProtectedRoute path="/work/add" component={AddWork}/>
+        <ProtectedRoute path="/task/add" component={AddTask}/>
         
         <Route path="*" component={() => "404 NOT FOUND"}/>
         </Switch>

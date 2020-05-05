@@ -23,7 +23,24 @@ class ProjectDetailPage extends Component {
             workList: []
         }
 
+        this.getUserRole()
         this.getProject()
+    }
+
+    getUserRole() {
+        fetch('http://localhost:8090/company/users?companyId=' + this.state.companyId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
+                'userId': + window.sessionStorage.getItem("userId")
+            }
+        })
+            .then(res => res.json()).catch()
+            .then((data) => {
+                this.setState({ userRole: data.currentUserRole })
+            })
     }
 
     getProject() {
@@ -44,7 +61,7 @@ class ProjectDetailPage extends Component {
 
 
     render() {
-        const { userRole, tasks, workList } = this.state;
+        const { userRole, tasks, workList, projectId, companyId } = this.state;
 
         const filterTasksByStatus = (filterValue) => {
             
@@ -66,7 +83,7 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>To do</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("to do").map((item) => (
-                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
@@ -76,7 +93,7 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>Doing</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("doing").map((item) => (
-                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
@@ -86,33 +103,39 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>Done</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("done").map((item) => (
-                                            <tr key={item.id}><td><TaskItem update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
                                         ))}
                             </tbody>
                                 </Table>
                             </Col>
                         </Row>
+                        {userRole == "admin" &&
+                        <Link to={{ pathname: '/task/add', state: { companyId, projectId } }}><Button variant="outline-primary" block>New task</Button></Link>
+                        }
                     </div>
+                    {userRole == "admin" &&
                     <div>
-                        <Row>
-                            <Col><h2>Work log</h2></Col>
-                            <Table variant="dark">
-                                <thead>
-                                    <tr>
-                                        <th>Task</th>
-                                        <th>Name</th>
-                                        <th>Begin date</th>
-                                        <th>End date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {workList.map((item) => (
-                                    <ProjectWorkItem key={item.id} work={item} />
-                                ))}
-                            </tbody>
-                            </Table>
-                        </Row>
-                    </div>
+                    <Row>
+                        <Col><h2>Work log</h2></Col>
+                        <Table variant="dark">
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Name</th>
+                                    <th>Begin date</th>
+                                    <th>End date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {workList.map((item) => (
+                                <ProjectWorkItem key={item.id} work={item} />
+                            ))}
+                        </tbody>
+                        </Table>
+                    </Row>
+                </div>
+                    }
+                    
                 </Container>
             </React.Fragment >
         )
