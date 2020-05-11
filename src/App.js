@@ -9,6 +9,7 @@ import {AppLayout} from './pages/app.layout'
 import {ProtectedRoute} from './service/protected.route'
 
 import AddCompany from './pages/AddCompanyPage'
+import JoinCompany from './pages/JoinCompanyPage'
 import AllCompanies from './pages/CompanyOverviewPage'
 import DetailCompany from './pages/CompanyDetailPage'
 import EditCompany from './pages/EditCompanyPage'
@@ -29,6 +30,7 @@ function App() {
         <ProtectedRoute exact path="/app" component={AppLayout}/>
         <Route path="/login" component={Login} />
         <ProtectedRoute path="/company/create" component={AddCompany}/>
+        <ProtectedRoute path="/company/join" component={JoinCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
         <ProtectedRoute name="projectDetail" path="/company/:companyId/project/:projectId" component={DetailProject}/>
         <ProtectedRoute name="companyEdit" path="/company/:companyId/edit" component={EditCompany}/>

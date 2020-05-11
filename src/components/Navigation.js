@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import  auth  from '../service/auth'
+import auth from '../service/auth'
 
-import {ListUl, Plus, PersonPlus, PersonFill} from 'react-bootstrap-icons'
+import { ListUl, Plus, PersonPlus, PersonFill } from 'react-bootstrap-icons'
 
 
 class Navigation extends Component {
@@ -19,15 +19,14 @@ class Navigation extends Component {
                         <NavDropdown title="Company" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/company/all"><ListUl></ListUl> Overview</NavDropdown.Item>
                             <NavDropdown.Item href="/company/create"><Plus></Plus> Create</NavDropdown.Item>
-                            <NavDropdown.Item disabled href="#action/3.3"><PersonPlus></PersonPlus> Join</NavDropdown.Item>
+                            <NavDropdown.Item href="/company/join"><PersonPlus></PersonPlus> Join</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link href="/work/add">Add work</Nav.Link>
                     </Nav>
                     {window.sessionStorage.getItem("userToken") == null ?
-                        <Link to="/login"><Button variant="outline-info">Login</Button></Link>:
-                        <Button onClick={() => auth.logout()} variant="outline-info">Logout</Button>
+                        <Link to="/login"><Button variant="outline-info">Login</Button></Link> :
+                        <Link to="/login"><Button onClick={() => auth.logout()} variant="outline-info">Logout</Button></Link>
                     }
-
                 </Navbar.Collapse>
             </Navbar>
         )

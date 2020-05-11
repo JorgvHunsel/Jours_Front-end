@@ -32,6 +32,8 @@ class AddCompanyPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 this.setState({ companyName: data.name, employees: data.usersInCompany, companyCode: data.code })
+
+            console.log(data)
             })
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, Link, useHistory } from 'react-router-dom';
 
 import CompanyItem from '../components/CompanyOverviewItem';
 import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
@@ -31,9 +31,16 @@ class CompanyOverviewPage extends Component {
         })
             .then(res => res.json()).catch()
             .then((data) => {
+                if (data.length === 0) {
+                    this.handleEmptyCompanies()
+                }
                 this.setState({ companies: data })
 
             })
+    }
+
+    handleEmptyCompanies() {
+        this.props.history.push("/company/join")
     }
 
     render() {
