@@ -77,19 +77,18 @@ class AddTaskPage extends Component {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
             },
             body: JSON.stringify({
                 name: this.state.name,
                 description: this.state.description,
-                projectId: this.state.projectId
+                projectId: this.state.projectId,
+              users: JSON.stringify(this.state.selectedEmployees)
             })
         }).then(response => response.json())
             .then(data => {
                 window.alert("succes")
-                if (data.message === 'Unauthorized') {
-                    this.setState({ showError: true })
-                    console.log('Gebruikersnaam of Wachtwoord komt niet overeen');
-                }
+                console.log(data)
             });
     }
 
@@ -111,7 +110,7 @@ class AddTaskPage extends Component {
                         <InputGroup.Prepend>
                             <InputGroup.Text id="inputGroup-sizing-lg">Description</InputGroup.Text>
                         </InputGroup.Prepend>
-                        <FormControl type="password" aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleDescriptionChange} />
+                        <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleDescriptionChange} />
                     </InputGroup>
                     <br />
                     <Dropdown >

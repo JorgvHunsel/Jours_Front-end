@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "create-react-class": "^15.6.3",
+    "gson": "^0.1.5",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "react": "^16.13.0",
