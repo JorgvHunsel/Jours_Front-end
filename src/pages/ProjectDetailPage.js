@@ -55,6 +55,7 @@ class ProjectDetailPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 console.log(data)
+                
                 this.setState({ tasks: data.tasks, workList: data.workList })
             })
     }

@@ -8,7 +8,7 @@ import { Pencil, BoxArrowInRight } from 'react-bootstrap-icons'
 function companyItem(props) {
     const companyItem = props.company;
 
-    const link = '/company/' + companyItem.id
+    const link = '/company/' + companyItem.id + '/edit'
 
     return (
         <Jumbotron>
@@ -16,7 +16,7 @@ function companyItem(props) {
             <Row>
                     <Col>
                         {companyItem.currentUserRole == "admin" ?
-                            <Link to=""><Button variant="outline-success" size="lg" ><Pencil /></Button></Link> :
+                            <Link to={link}><Button variant="outline-success" size="lg" ><Pencil /></Button></Link> :
                             <Button variant="outline-secondary" size="lg" disabled ><Pencil /></Button>
                         }
                     </Col>

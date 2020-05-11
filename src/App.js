@@ -11,6 +11,7 @@ import {ProtectedRoute} from './service/protected.route'
 import AddCompany from './pages/AddCompanyPage'
 import AllCompanies from './pages/CompanyOverviewPage'
 import DetailCompany from './pages/CompanyDetailPage'
+import EditCompany from './pages/EditCompanyPage'
 import DetailProject from './pages/ProjectDetailPage'
 import AddProject from './pages/AddProjectPage'
 import AddWork from './pages/AddWorkPage'
@@ -30,6 +31,7 @@ function App() {
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
         <ProtectedRoute name="projectDetail" path="/company/:companyId/project/:projectId" component={DetailProject}/>
+        <ProtectedRoute name="companyEdit" path="/company/:companyId/edit" component={EditCompany}/>
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
         <ProtectedRoute path="/project/create" component={AddProject}/>
         <ProtectedRoute path="/work/add" component={AddWork}/>
