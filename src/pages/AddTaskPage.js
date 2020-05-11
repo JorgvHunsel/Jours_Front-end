@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import auth from '../service/auth'
 
-import { Container, Button, InputGroup, FormControl, Alert, Dropdown } from 'react-bootstrap'
+import { Container, Button, InputGroup, FormControl, Alert, Dropdown, Row, Col, ListGroup } from 'react-bootstrap'
 import { Check, Dot } from 'react-bootstrap-icons'
+
+import EmployeeTask from '../components/EmployeeTaskItem'
+
 
 class AddTaskPage extends Component {
     constructor(props) {
@@ -11,15 +14,14 @@ class AddTaskPage extends Component {
         this.state = {
             name: '',
             description: '',
-            employees: [],
+            allEmployees: [],
+            selectedEmployees: [],
             projectId: this.props.location.state.projectId,
             companyId: this.props.location.state.companyId
         }
     }
 
-    componentDidMount(){
-        console.log(this.state.companyId)
-        console.log(this.state.projectId)
+    componentDidMount() {
         this.getEmployees()
     }
 
@@ -36,7 +38,7 @@ class AddTaskPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 console.log(data)
-                this.setState({ employees: data.usersInCompany })
+                this.setState({ allEmployees: data.usersInCompany })
             })
     }
 
@@ -52,8 +54,20 @@ class AddTaskPage extends Component {
         })
     }
 
-    handleAddEmployee(){
-
+    handleAddEmployee(employee) {
+        this.setState({ 
+            selectedEmployees: this.state.selectedEmployees.concat(employee), 
+            allEmployees: this.state.allEmployees.filter(function(emp) {
+                return emp != employee
+            })})
+    }
+    
+    removeEmployee(employee) {
+        this.setState({ 
+            allEmployees: this.state.allEmployees.concat(employee), 
+            selectedEmployees: this.state.selectedEmployees.filter(function(emp) {
+                return emp != employee
+            })})
     }
 
     handleSubmit = (e) => {
@@ -80,7 +94,7 @@ class AddTaskPage extends Component {
     }
 
     render() {
-        const { employees } = this.state;
+        const { allEmployees, selectedEmployees } = this.state;
 
         return (
             <Container>
@@ -103,13 +117,18 @@ class AddTaskPage extends Component {
                     <Dropdown >
                         <Dropdown.Toggle variant="outline-info" id="dropdown-basic" block>Chose your users</Dropdown.Toggle>
                         <Dropdown.Menu >
-                            {employees.map((employee) => (
-             
+                            {allEmployees.map((employee) => (
                                 <Dropdown.Item key={employee.id} onClick={() => this.handleAddEmployee(employee)}><Dot></Dot>{employee.username}</Dropdown.Item>
                             ))}
                         </Dropdown.Menu>
                     </Dropdown>
-                    <br/>
+                    <br />
+                    <Row><Col><h2>People</h2></Col></Row>
+                    <ListGroup>
+                        {selectedEmployees.map((employee) => (
+                            <EmployeeTask key={employee.id} employee={employee} update={()=> this.removeEmployee(employee)}></EmployeeTask>
+                        ))}
+                    </ListGroup>
                     <Button className="btn btn-primary btn-block" onClick={this.handleSubmit} size="lg"><Check /></Button>
                     <br />
                     {this.state.showError &&
