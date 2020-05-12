@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken'
 
 import DatePicker from 'react-datepicker'
 
-import { Dot } from 'react-bootstrap-icons'
+import { Dot, Check } from 'react-bootstrap-icons'
 
-import { Row, Container, Col, Button, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Row, Container, Col, Button, Dropdown, DropdownButton, Tab, Tabs } from 'react-bootstrap';
 
 class AddWorkPage extends Component {
     constructor(props) {
@@ -105,8 +105,6 @@ class AddWorkPage extends Component {
             })
         }).then(response => response.json())
             .then(data => {
-                console.log(data)
-                window.alert("Work added!")
                 this.getUnfinishedWork()
             });
     }
@@ -134,6 +132,8 @@ class AddWorkPage extends Component {
             <React.Fragment>
                 <div>
                     <Container>
+                        <Row><Col><h1>Register your work</h1></Col></Row>
+                        <Row><Col><h3>1. Select your task</h3></Col></Row>
                         <Row>
                             <Col>
                                 <Dropdown >
@@ -146,46 +146,60 @@ class AddWorkPage extends Component {
                                 </Dropdown>
                             </Col>
                         </Row>
-                        <Row><Col><h3>Add work:</h3></Col></Row>
-                        {this.state.unfinishedWork == null ?
-                            <Row><Col><Button variant="success" onClick={() => this.handleClockIn()} block>Clock in</Button></Col></Row> :
-                            <Row><Col><Button variant="danger" onClick={() => this.handleClockOut()} block>Clock out</Button></Col></Row>
-                        }
-                        <Row><Col><h3>Add work manually:</h3></Col></Row>
-                        <form className="form">
-                            <div className="div">
-                                <Row>
-                                    <Col>
-                                        <div className="form-group">
-                                            <label>Begin time:</label>
-                                            <DatePicker
-                                                selected={this.state.beginDate}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={15}
-                                                timeCaption="Time"
-                                                timeFormat="HH:mm"
-                                                dateFormat="HH:mm"
-                                                onChange={date => handleBeginDate(date)} />
-                                        </div>
-                                    </Col>
-                                    <Col>
-                                        <div className="form-group">
-                                            <label>End time:</label>
-                                            <DatePicker
-                                                selected={this.state.endDate}
-                                                showTimeSelect
-                                                showTimeSelectOnly
-                                                timeIntervals={15}
-                                                timeCaption="Time"
-                                                timeFormat="HH:mm"
-                                                dateFormat="HH:mm"
-                                                onChange={date => handleEndDate(date)} />                                        </div>
-                                    </Col>
-                                </Row>
-                                <Button className="btn btn-primary btn-block" onClick={() => this.addWork()}>Confirm</Button>
-                            </div>
-                        </form>
+
+                        <Row><Col><h3>2. Choose your method</h3></Col></Row>
+                        <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                            <Tab eventKey="clockin" title="Clock in">
+                                <Row><Col><h4>Clock in work:</h4></Col></Row>
+                                {this.state.unfinishedWork == null ?
+                                    <Row><Col><Button variant="success" onClick={() => this.handleClockIn()} block>Start timer</Button></Col></Row> :
+                                    <Row><Col><Button variant="danger" onClick={() => this.handleClockOut()} block>Stop timer</Button></Col></Row>
+                                }
+                            </Tab>
+
+                          
+                            <Tab eventKey="mannually" title="Manually">
+                                <Row><Col><h4>Add work manually:</h4></Col></Row>
+                                <form className="form">
+                                    <div className="div">
+                                        <Row>
+                                            <Col>
+                                                <div className="form-group">
+                                                    <h5>Begin time</h5>
+                                                    <DatePicker
+                                                        selected={this.state.beginDate}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={15}
+                                                        timeCaption="Time"
+                                                        timeFormat="HH:mm"
+                                                        dateFormat="HH:mm"
+                                                        onChange={date => handleBeginDate(date)} />
+                                                </div>
+                                            </Col>
+                                            <Col>
+                                                <div className="form-group">
+                                                    <h5>End time</h5>
+                                                    <DatePicker
+                                                        selected={this.state.endDate}
+                                                        showTimeSelect
+                                                        showTimeSelectOnly
+                                                        timeIntervals={15}
+                                                        timeCaption="Time"
+                                                        timeFormat="HH:mm"
+                                                        dateFormat="HH:mm"
+                                                        onChange={date => handleEndDate(date)} />                                        </div>
+                                            </Col>
+                                        </Row>
+                                        <Button block variant="success" onClick={() => this.addWork()}><Check /></Button>
+                                    </div>
+                                </form>
+                            </Tab>
+                        </Tabs>
+
+
+
+
 
                     </Container>
                 </div>

@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 
 import TaskItem from '../components/TaskItem';
 
-import { Row, Container, Col, Button, CardColumns, Modal } from 'react-bootstrap';
+import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
 import { PlusCircle } from 'react-bootstrap-icons'
 import ProjectWorkItem from '../components/ProjectWorkItem';
 
@@ -56,7 +56,7 @@ class ProjectDetailPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 console.log(data)
-
+                
                 this.setState({ tasks: data.tasks, workList: data.workList })
             })
     }
@@ -64,6 +64,9 @@ class ProjectDetailPage extends Component {
 
     render() {
         const { userRole, tasks, workList, projectId, companyId } = this.state;
+
+       
+
 
         const filterTasksByStatus = (filterValue) => {
 

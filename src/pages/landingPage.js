@@ -5,11 +5,12 @@ import {Jumbotron, Button} from 'react-bootstrap'
 export const LandingPage = () => {
     return <Jumbotron>
     <h1>Welcome to Jours!</h1>
-    <p>
-      This is the start page
-    </p>
-    <p>
+    
+    <h4>Click the start button to begin</h4>
+    <p>Made by Jorg van Hunsel</p>
+    
+
       <Link to="/company/all"><Button variant="primary">Start</Button></Link>
-    </p>
+
   </Jumbotron>;
 }

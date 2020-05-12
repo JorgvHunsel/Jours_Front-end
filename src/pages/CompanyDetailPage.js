@@ -74,7 +74,7 @@ class CompanyDetailPage extends Component {
                             ))}
                         </CardColumns>
                         {userRole == "admin" &&
-                        <Link to={{ pathname: '/project/create', state: { companyId } }}><Button variant="primary" size="sm" block>New project</Button></Link>
+                        <Link to={{ pathname: '/project/create', state: { companyId } }}><Button variant="outline-primary" size="sm" block>New project</Button></Link>
                         }
                 </div>
 
