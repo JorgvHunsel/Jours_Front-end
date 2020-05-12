@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Navigation from '../src/components/Navigation'
 import Login from '../src/pages/LoginPage';
+import Register from '../src/pages/RegisterPage';
 import {LandingPage} from './pages/landingPage'
 import {AppLayout} from './pages/app.layout'
 import {ProtectedRoute} from './service/protected.route'
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/" component={LandingPage}/>
         <ProtectedRoute exact path="/app" component={AppLayout}/>
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/join" component={JoinCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>

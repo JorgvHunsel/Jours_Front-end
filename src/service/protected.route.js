@@ -7,7 +7,6 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
         <Route {...rest} render={
             (props) => {
                 if (window.sessionStorage.getItem("userToken") != null) {   
-                    console.log("access accepted")    
                     return <Component {...props} />
                 }
                 else {

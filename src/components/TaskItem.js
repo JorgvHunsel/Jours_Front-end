@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Form, Card } from 'react-bootstrap'
-import { ArrowLeft, ArrowRight, Trash } from 'react-bootstrap-icons'
+import { ArrowLeft, ArrowRight, Trash, Search } from 'react-bootstrap-icons'
 
 
 function taskItem(props) {
@@ -33,10 +33,11 @@ function taskItem(props) {
 
 
     return (
-        <Card>
+                <Card>
             <Card.Body>
                 <Card.Title>{taskItem.name}</Card.Title>
                 <Card.Text>{taskItem.description.substring(0, 20)}..</Card.Text>
+                <Search onClick={() =>window.alert("d")}/>
                 {userRole == "admin" &&
                     <Row>
                         <Col>

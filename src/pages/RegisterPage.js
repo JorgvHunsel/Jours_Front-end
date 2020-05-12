@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import auth from '../service/auth'
 import jwt from 'jsonwebtoken'
 
-import {Link} from 'react-router-dom'
 import { Container, Button, InputGroup, FormControl, Alert } from 'react-bootstrap'
 import { Check } from 'react-bootstrap-icons'
 
-class LoginPage extends Component {
+class RegisterPage extends Component {
     constructor(props) {
         super(props)
 
@@ -29,8 +28,27 @@ class LoginPage extends Component {
         })
     }
 
-    handleLogin = (e) => {
+    handleRegister = (e) => {
         e.preventDefault();
+        fetch('http://localhost:8090/register', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+            })
+        }).then(response => response.json())
+            .then(data => {
+                if(data.id !== null){
+                    this.handleLogin()
+                }
+            });
+    }
+
+    handleLogin(){
         fetch('http://localhost:8090/authenticate', {
             method: 'POST',
             headers: {
@@ -60,7 +78,7 @@ class LoginPage extends Component {
             
             <Container>
                 <div className="div">
-                    <h3>Login</h3>
+                    <h3>Register</h3>
                     <InputGroup size="lg">
                         <InputGroup.Prepend>
                             <InputGroup.Text id="inputGroup-sizing-lg">Username</InputGroup.Text>
@@ -75,12 +93,10 @@ class LoginPage extends Component {
                         <FormControl type="password" aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handlePasswordChange} />
                     </InputGroup>
                     <br />
-                    <Button className="btn btn-primary btn-block" onClick={this.handleLogin} size="lg"><Check /></Button>
-                    <br/>
-                    <Link to="/register"><Button variant="outline-success"size="lg" block>Register</Button></Link>
+                    <Button className="btn btn-primary btn-block" onClick={this.handleRegister} size="lg"><Check /></Button>
                     <br/>
                 {this.state.showError &&
-                <Alert variant="danger">Login failed</Alert>
+                <Alert variant="danger">Register failed</Alert>
                 }
                 </div>
             </Container>
@@ -88,4 +104,4 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage
+export default RegisterPage

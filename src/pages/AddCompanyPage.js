@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import auth from '../service/auth'
 import jwt from 'jsonwebtoken'
 
-import { Container } from 'react-bootstrap'
+import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Check } from 'react-bootstrap-icons'
 
 class AddCompanyPage extends Component {
     constructor(props) {
@@ -43,16 +44,15 @@ class AddCompanyPage extends Component {
     render() {
         return (
             <Container>
-            <form className="form">
-                <div className="div">
-                    <h3>Create company:</h3>
-                    <div className="form-group">
-                        <label>Company name:</label>
-                        <input required type="text" className="form-control" placeholder="Enter the name of your company" onChange={this.handleCompanyNameChange} />
-                    </div>
-                    <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Confirm</button>
-                </div>
-            </form>
+                <h1>Create company</h1>
+                <InputGroup size="lg">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text id="inputGroup-sizing-lg">Company name</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleCompanyNameChange} />
+                </InputGroup>
+                <br />
+                <Button className="btn btn-primary btn-block" onClick={this.handleSubmit} size="lg"><Check /></Button>
             </Container>
         );
     }
