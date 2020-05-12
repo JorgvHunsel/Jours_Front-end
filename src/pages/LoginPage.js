@@ -60,7 +60,7 @@ class LoginPage extends Component {
             
             <Container>
                 <div className="div">
-                    <h3>Login</h3>
+                    <h1>Login</h1>
                     <InputGroup size="lg">
                         <InputGroup.Prepend>
                             <InputGroup.Text id="inputGroup-sizing-lg">Username</InputGroup.Text>

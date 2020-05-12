@@ -10,6 +10,7 @@ function ProjectItem(props) {
     const role = props.role;
 
     const projectLink = '/company/' + props.companyId +  '/project/' + projectItem.id
+    const editProjectLink = '/company/' + props.companyId +  '/project/' + projectItem.id + '/edit'
 
 
     function handleSubmit(event) {
@@ -41,7 +42,7 @@ function ProjectItem(props) {
                             <Link to={projectLink}><Button variant="success" block><BoxArrowInRight/></Button></Link>
                         </Col>
                         {role == "admin" &&
-                            <Col><Button variant="secondary" block><Pencil/></Button></Col>
+                            <Col><Link to={editProjectLink}><Button variant="secondary" block><Pencil/></Button></Link></Col>
                         }
                     </Row>
                 </Card.Body>

@@ -16,6 +16,7 @@ import DetailCompany from './pages/CompanyDetailPage'
 import EditCompany from './pages/EditCompanyPage'
 import DetailProject from './pages/ProjectDetailPage'
 import AddProject from './pages/AddProjectPage'
+import EditProject from './pages/EditProjectPage'
 import AddWork from './pages/AddWorkPage'
 import AddTask from './pages/AddTaskPage'
 
@@ -34,6 +35,7 @@ function App() {
         <ProtectedRoute path="/company/create" component={AddCompany}/>
         <ProtectedRoute path="/company/join" component={JoinCompany}/>
         <ProtectedRoute path="/company/all" component={AllCompanies}/>
+        <ProtectedRoute name="projectEdit" path="/company/:companyId/project/:projectId/edit" component={EditProject}/>
         <ProtectedRoute name="projectDetail" path="/company/:companyId/project/:projectId" component={DetailProject}/>
         <ProtectedRoute name="companyEdit" path="/company/:companyId/edit" component={EditCompany}/>
         <ProtectedRoute name="companyDetail" path="/company/:companyId" component={DetailCompany}/>
