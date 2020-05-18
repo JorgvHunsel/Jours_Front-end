@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import { Dot, Check } from 'react-bootstrap-icons'
 import { Row, Container, Col, Button, Dropdown, Tab, Tabs } from 'react-bootstrap';
+import { GetUnfinishedWork } from '../../service/api/work'
+import { GetTasksFromuser, UpdateWork, AddWork } from '../../service/api/user'
 
 class AddWorkPage extends Component {
     constructor(props) {
@@ -23,37 +25,16 @@ class AddWorkPage extends Component {
     }
 
     getUnfinishedWork() {
-        fetch('http://localhost:8090/work/clock', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
+        GetUnfinishedWork().then((data) => {
+            this.setState({ unfinishedWork: data })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                this.setState({ unfinishedWork: data })
-            })
     }
 
     getTasksFromUser() {
-        fetch('http://localhost:8090/user/tasks', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
+        GetTasksFromuser().then((data) => {
+            this.setState({ tasks: data })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                this.setState({ tasks: data })
-            })
     }
-
-
 
     handleClockIn() {
         this.setState({ endDate: null }, () => {
@@ -62,23 +43,11 @@ class AddWorkPage extends Component {
     }
 
     handleClockOut() {
-        fetch('http://localhost:8090/work/update', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                workId: this.state.unfinishedWork.id
-            })
-        }).then(response => response.json())
-            .then(data => {
-                window.alert("Succes")
-                this.setState({ unfinishedWork: null })
-            });
+        UpdateWork(this.state.unfinishedWork.id).then((data) => {
+            window.alert("Succes")
+            this.setState({ unfinishedWork: null })
+        })
     }
-
 
     addWork() {
         if (this.state.selectedTask === '') {
@@ -86,22 +55,9 @@ class AddWorkPage extends Component {
             return
         }
 
-        fetch('http://localhost:8090/work/add', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                taskId: this.state.selectedTask.id,
-                beginDate: this.state.beginDate,
-                endDate: this.state.endDate
-            })
-        }).then(response => response.json())
-            .then(data => {
-                this.getUnfinishedWork()
-            });
+        AddWork(this.state.selectedTask.id, this.state.beginDate, this.state.endDate).then(()=>{
+            this.getUnfinishedWork()
+        })
     }
 
     render() {

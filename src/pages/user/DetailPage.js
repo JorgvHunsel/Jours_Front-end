@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
+import {GetUser} from '../../service/api/user'
 
 import { Row, Container, Col } from 'react-bootstrap';
 import UserDetailTaskItem from '../../components/user/DetailTaskItem'
@@ -23,19 +24,9 @@ class UserDetailPage extends Component {
     }
 
     getUser() {
-        fetch('http://localhost:8090/user/?userId=' + this.state.userId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
+        GetUser(this.state.userId).then((data)=>{
+            this.setState({username: data.username, taskList: data.tasks, workList: data.workList})
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                this.setState({username: data.username, taskList: data.tasks, workList: data.workList})
-            })
     }
 
     handleEmptyCompanies() {
@@ -83,9 +74,7 @@ class UserDetailPage extends Component {
                 </Container>
             </React.Fragment >
         )
-
     }
-
 }
 
 export default UserDetailPage

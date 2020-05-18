@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Container, Button, InputGroup, FormControl, Alert, Dropdown, Row, Col, ListGroup } from 'react-bootstrap'
 import { Check, Dot } from 'react-bootstrap-icons'
 import EmployeeTask from '../../components/user/EmployeeTaskItem'
+import {GetCompany} from '../../service/api/company'
+import {CreateTask} from '../../service/api/task'
 
 
 class AddTaskPage extends Component {
@@ -23,20 +25,9 @@ class AddTaskPage extends Component {
     }
 
     getEmployees() {
-        fetch('http://localhost:8090/company/users?companyId=' + this.state.companyId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-                'userId': + window.sessionStorage.getItem("userId")
-            }
+        GetCompany(this.state.companyId).then((data)=>{
+            this.setState({ allEmployees: data.usersInCompany })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                this.setState({ allEmployees: data.usersInCompany })
-            })
     }
 
     handleNameChange = event => {
@@ -69,24 +60,9 @@ class AddTaskPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        fetch('http://localhost:8090/task/create', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                description: this.state.description,
-                projectId: this.state.projectId,
-              users: JSON.stringify(this.state.selectedEmployees)
-            })
-        }).then(response => response.json())
-            .then(data => {
-                window.alert("succes")
-                console.log(data)
-            });
+        CreateTask(this.state.name, this.state.description, this.state.projectId, this.state.selectedEmployees).then(()=>{
+            window.alert("succes")
+        })
     }
 
     render() {
