@@ -86,6 +86,7 @@ class CompanyDetailPage extends Component {
                                 <tr>
                                     <th>Name</th>
                                     <th>Function</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
