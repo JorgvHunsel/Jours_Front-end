@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../styling/AddProjectPage.css'
+import { GetProject, DisableProject, EditProject } from '../../service/api/project'
 
 
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap'
@@ -25,21 +26,9 @@ class EditProjectPage extends Component {
     }
 
     getProject() {
-        fetch('http://localhost:8090/project/?projectId=' + this.state.projectId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-                'projectId': + this.state.projectId,
-            }
+        GetProject(this.state.projectId).then((data) => {
+            this.setState({ projectName: data.name, endDate: new Date(data.endDate) })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                this.setState({ projectName: data.name, endDate: new Date(data.endDate) })
-
-            })
     }
 
 
@@ -53,48 +42,19 @@ class EditProjectPage extends Component {
         this.setState({
             endDate: date
         })
-        console.log(this.state.endDate)
     }
 
     disableProject() {
-        console.log(this.state.projectId)
-        fetch('http://localhost:8090/project/disable', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                projectId: this.state.projectId,
-            })
-        }).then(response => response.json())
-            .then(data => {
-                this.props.history.push('/company/' + this.state.companyId)
-            });
+        DisableProject(this.state.projectId).then(() => {
+            this.props.history.push('/company/' + this.state.companyId)
+        })
     }
 
     handleSubmit = (e) => {
-        console.log(this.state.companyId)
-        console.log(this.state.endDate)
         e.preventDefault();
-        fetch('http://localhost:8090/project', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                projectId: this.state.projectId,
-                projectName: this.state.projectName,
-                endDate: this.state.endDate,
-                companyId: this.state.companyId
-            })
-        }).then(response => response.json())
-            .then(data => {
-                this.props.history.push('/company/' + this.state.companyId)
-            });
+        EditProject(this.state.projectId).then(()=>{
+            this.props.history.push('/company/' + this.state.companyId)
+        })
     }
 
 

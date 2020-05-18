@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import TaskItem from '../../components/task/TaskItem';
 import { Row, Container, Col, Button } from 'react-bootstrap';
 import ProjectWorkItem from '../../components/project/WorkItem';
+import { GetCompany } from '../../service/api/company'
+import { GetProject } from '../../service/api/project'
 
 class ProjectDetailPage extends Component {
     constructor(props) {
@@ -24,52 +26,26 @@ class ProjectDetailPage extends Component {
     }
 
     getUserRole() {
-        fetch('http://localhost:8090/company/users?companyId=' + this.state.companyId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-                'userId': + window.sessionStorage.getItem("userId")
-            }
+        GetCompany(this.state.companyId).then((data) => {
+            this.setState({ userRole: data.currentUserRole })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                this.setState({ userRole: data.currentUserRole })
-            })
     }
 
     getProject() {
-        fetch('http://localhost:8090/project/?projectId=' + this.state.projectId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
+        GetProject(this.state.projectId).then((data)=>{
+            this.setState({ tasks: data.tasks, workList: data.workList })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                
-                this.setState({ tasks: data.tasks, workList: data.workList })
-            })
     }
 
 
     render() {
         const { userRole, tasks, workList, projectId, companyId } = this.state;
 
-       
-
-
         const filterTasksByStatus = (filterValue) => {
-
             var newtask = tasks.filter((item) => {
                 return item.status === filterValue
             })
             return newtask
-
         }
 
         return (
@@ -135,9 +111,7 @@ class ProjectDetailPage extends Component {
                             </Row>
                         </div>
                     }
-
                 </Container>
-
             </React.Fragment >
         )
     }

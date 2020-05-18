@@ -26,7 +26,6 @@ class JoinCompanyPage extends Component {
         })
     }
 
-
     render() {
         return (
             <Container>
