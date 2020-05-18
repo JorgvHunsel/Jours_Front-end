@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import auth from '../../service/auth'
+import { CreateCompany } from '../../service/api/company'
 import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { Check } from 'react-bootstrap-icons'
 
@@ -19,24 +19,10 @@ class AddCompanyPage extends Component {
     }
 
     handleSubmit = (e) => {
-        console.log(auth)
         e.preventDefault();
-        fetch('http://localhost:8090/company/create', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                companyName: this.state.companyName,
-                userId: window.sessionStorage.getItem("userId")
-            })
-        }).then(response => response.json())
-            .then(data => {
-                console.log(data)
-                this.props.history.push('/company/all')
-            });
+        CreateCompany(this.state.companyName).then((data) => {
+            this.props.history.push('/company/all')
+        })
     }
 
     render() {

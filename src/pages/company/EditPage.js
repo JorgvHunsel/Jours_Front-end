@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import auth from '../../service/auth'
+import { EditCompany, GetCompany, UpdateCompanyCode } from '../../service/api/company'
 
 import { Container, InputGroup, FormControl, Button, ListGroup, Row, Col } from 'react-bootstrap'
 import { Check, ArrowClockwise } from 'react-bootstrap-icons'
@@ -19,59 +19,22 @@ class EditCompanyPage extends Component {
     }
 
     getCompany() {
-        fetch('http://localhost:8090/company/users?companyId=' + this.state.companyId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-                'userId': + window.sessionStorage.getItem("userId")
-            }
+        GetCompany(this.state.companyId).then((data) => {
+            this.setState({ companyName: data.name, employees: data.usersInCompany, companyCode: data.code })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                this.setState({ companyName: data.name, employees: data.usersInCompany, companyCode: data.code })
-
-            console.log(data)
-            })
     }
 
-    updateCode(){
-        fetch('http://localhost:8090/company/code?companyId=' + this.state.companyId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
-            }
+    updateCode() {
+        UpdateCompanyCode(this.state.companyId).then((data) => {
+            this.setState({ companyCode: data })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                console.log(data)
-                this.setState({ companyCode: data })
-            })
     }
 
     handleSubmit = (e) => {
-        console.log(auth)
         e.preventDefault();
-        fetch('http://localhost:8090/company/edit', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                companyId: this.state.companyId,
-                companyName: this.state.companyName,
-                users: JSON.stringify(this.state.employees)
-            })
-        }).then(response => response.json())
-            .then(data => {
-                console.log(data)
-                this.props.history.push('/company/all')
-            });
+        EditCompany(this.state.companyId, this.state.companyName, this.state.employees).then(() => {
+            this.props.history.push('/company/all')
+        })
     }
 
     handleCompanyNameChange = event => {
@@ -91,7 +54,7 @@ class EditCompanyPage extends Component {
                     <InputGroup.Prepend>
                         <InputGroup.Text id="inputGroup-sizing-lg">Name</InputGroup.Text>
                     </InputGroup.Prepend>
-                    <FormControl defaultValue={this.state.companyName} aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleNameChange} />
+                    <FormControl defaultValue={this.state.companyName} aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={this.handleCompanyNameChange} />
                 </InputGroup>
                 <br />
                 <h2>Employees</h2>
@@ -110,16 +73,13 @@ class EditCompanyPage extends Component {
                     <InputGroup.Prepend>
                         <InputGroup.Text id="inputGroup-sizing-lg">Code</InputGroup.Text>
                     </InputGroup.Prepend>
-                    <FormControl defaultValue={this.state.companyCode}  aria-label="Large" aria-describedby="inputGroup-sizing-sm" disabled/>
+                    <FormControl defaultValue={this.state.companyCode} aria-label="Large" aria-describedby="inputGroup-sizing-sm" disabled />
                     <InputGroup.Append>
-                        <Button onClick={() => this.updateCode()} variant="success"><ArrowClockwise/></Button>
+                        <Button onClick={() => this.updateCode()} variant="success"><ArrowClockwise /></Button>
                     </InputGroup.Append>
                 </InputGroup>
                 <br />
-
-
                 <Button className="btn btn-primary btn-block" onClick={this.handleSubmit} size="lg"><Check /></Button>
-
             </Container>
         );
     }

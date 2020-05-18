@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import auth from '../../service/auth'
+import {JoinCompany} from '../../service/api/company'
 
 import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { Check } from 'react-bootstrap-icons'
@@ -14,23 +14,10 @@ class JoinCompanyPage extends Component {
     }
 
     handleSubmit = (e) => {
-        console.log(auth)
         e.preventDefault();
-        fetch('http://localhost:8090/company/join', {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                code: this.state.companyCode
-            })
-        }).then(response => response.json())
-            .then(data => {
-                console.log(data)
-                this.props.history.push("/company/" + data.id)
-            });
+        JoinCompany(this.state.companyCode).then((data)=>{
+            this.props.history.push("/company/" + data.id)
+        })
     }
 
     handleCodeChange = event => {

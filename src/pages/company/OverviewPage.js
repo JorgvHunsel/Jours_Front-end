@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CompanyItem from '../../components/company/OverviewItem';
 import { Row, Col } from 'react-bootstrap';
+import { GetCompaniesFromUser } from '../../service/api/user'
 
 
 class CompanyOverviewPage extends Component {
@@ -17,22 +18,12 @@ class CompanyOverviewPage extends Component {
     }
 
     getCompanies() {
-        fetch('http://localhost:8090/company/all/?userId=' + this.state.userId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken")
+        GetCompaniesFromUser(this.state.userId).then((data) => {
+            if (data.length === 0) {
+                this.handleEmptyCompanies()
             }
+            this.setState({ companies: data })
         })
-            .then(res => res.json()).catch()
-            .then((data) => {
-                if (data.length === 0) {
-                    this.handleEmptyCompanies()
-                }
-                this.setState({ companies: data })
-
-            })
     }
 
     handleEmptyCompanies() {
@@ -54,9 +45,7 @@ class CompanyOverviewPage extends Component {
 
             </React.Fragment >
         )
-
     }
-
 }
 
 export default CompanyOverviewPage
