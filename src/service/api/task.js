@@ -17,3 +17,21 @@ export async function CreateTask(name, description, projectId, selectedEmployees
             return data
         });
 }
+
+export async function ChangeTaskStatus(taskItemId, taskItemStatus, direction){
+    return fetch('http://localhost:8090/task/status', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
+        },
+        body: JSON.stringify({
+            taskId: taskItemId,
+            status: taskItemStatus,
+            direction: direction
+        })
+    }).then(response => {
+        return response
+    });
+}

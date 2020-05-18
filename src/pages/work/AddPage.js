@@ -57,6 +57,7 @@ class AddWorkPage extends Component {
 
         AddWork(this.state.selectedTask.id, this.state.beginDate, this.state.endDate).then(()=>{
             this.getUnfinishedWork()
+            window.alert("Work added succesfull")
         })
     }
 

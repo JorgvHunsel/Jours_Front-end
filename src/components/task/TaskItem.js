@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Row, Col, Button, Card, Modal, ListGroup } from 'react-bootstrap'
 import { ArrowLeft, ArrowRight, Trash } from 'react-bootstrap-icons'
+import {ChangeTaskStatus} from '../../service/api/task'
 
 
 
@@ -15,32 +16,16 @@ function TaskItem(props) {
 
 
     function changeTaskStatus(direction) {
-
-        fetch('http://localhost:8090/task/status', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + window.sessionStorage.getItem("userToken"),
-            },
-            body: JSON.stringify({
-                taskId: taskItem.id,
-                status: taskItem.status,
-                direction: direction
-            })
-        }).then(response => {
+        ChangeTaskStatus(taskItem.id, taskItem.status, direction).then(()=>{
             props.update()
-        });
+        })
     }
 
-
-
     return (
-        
-        <>
-            <Card border="secondary" onClick={handleShow}>
+        <tr ><td>
+            <Card border="secondary">
                 <Card.Body>
-                    <Card.Title>{taskItem.name}</Card.Title>
+                    <Card.Title onClick={handleShow}>{taskItem.name}</Card.Title>
                     <Card.Text>{taskItem.description.substring(0, 20)}..</Card.Text>
 
                     {userRole === "admin" &&
@@ -69,15 +54,15 @@ function TaskItem(props) {
                 <Modal.Body>{taskItem.description}</Modal.Body>
                 <Modal.Body><h4>People</h4></Modal.Body>
                 <ListGroup>{taskItem.userNames.map((username) => (
-                    <ListGroup.Item>{username}</ListGroup.Item>
+                    <ListGroup.Item key={username}>{username}</ListGroup.Item>
                 ))}</ListGroup>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
-          </Button>
+                    </Button>
                 </Modal.Footer>
             </Modal>
-        </>
+        </td></tr>
     )
 }
 

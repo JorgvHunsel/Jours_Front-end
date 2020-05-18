@@ -12,28 +12,7 @@ function ProjectOverviewItem(props) {
     const projectLink = '/company/' + props.companyId +  '/project/' + projectItem.id
     const editProjectLink = '/company/' + props.companyId +  '/project/' + projectItem.id + '/edit'
 
-
-    function handleSubmit(event) {
-        event.preventDefault();
-        fetch('https://koffieleut.herokuapp.com/project/id', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-
-            })
-        }).then(
-            function (response) {
-
-            }
-        )
-    }
-
-
     return (
-        <form onSubmit={handleSubmit}>
             <Card text="light" bg="dark">
                 <Card.Title>{projectItem.name}</Card.Title>
                 <Card.Body>
@@ -50,7 +29,6 @@ function ProjectOverviewItem(props) {
                     <small className="text-muted">End date: {projectItem.endDate}</small>
                 </Card.Footer>
             </Card>
-        </form>
     )
 }
 

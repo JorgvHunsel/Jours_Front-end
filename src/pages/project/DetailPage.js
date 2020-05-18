@@ -59,7 +59,7 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>To do</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("to do").map((item) => (
-                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                            <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
                                         ))}
                                     </tbody>
                                 </Table>
@@ -69,7 +69,7 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>Doing</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("doing").map((item) => (
-                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                           <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
                                         ))}
                                     </tbody>
                                 </Table>
@@ -79,7 +79,7 @@ class ProjectDetailPage extends Component {
                                     <thead><tr><th>Done</th></tr></thead>
                                     <tbody>
                                         {filterTasksByStatus("done").map((item) => (
-                                            <tr key={item.id}><td><TaskItem userRole={userRole} update={() => this.getProject()} key={item.id} task={item} /></td></tr>
+                                            <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
                                         ))}
                                     </tbody>
                                 </Table>
