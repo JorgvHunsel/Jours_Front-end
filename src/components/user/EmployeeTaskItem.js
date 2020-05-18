@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { Link } from 'react-router-dom'
-import { Button, Card, Row, Col, ListGroup } from 'react-bootstrap'
+import { Button, Row, Col, ListGroup } from 'react-bootstrap'
 import { Trash} from 'react-bootstrap-icons'
 
 

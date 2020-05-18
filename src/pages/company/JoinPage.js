@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
+import auth from '../../service/auth'
 
-import { Container, InputGroup, FormControl, Button, ListGroup, Row, Col } from 'react-bootstrap'
-import { Check, ArrowClockwise } from 'react-bootstrap-icons'
+import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Check } from 'react-bootstrap-icons'
 
 class JoinCompanyPage extends Component {
     constructor(props) {
@@ -12,7 +11,6 @@ class JoinCompanyPage extends Component {
         this.state = {
             companyCode: '',
         }
-
     }
 
     handleSubmit = (e) => {

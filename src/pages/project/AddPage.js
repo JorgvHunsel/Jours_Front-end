@@ -1,18 +1,12 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
+import auth from '../../service/auth'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-
-import '../styling/AddProjectPage.css'
-
-
+import '../../styling/AddProjectPage.css'
 import { Container } from 'react-bootstrap'
 
 class AddProjectPage extends Component {
-
-
     constructor(props) {
         super(props)
 
@@ -23,7 +17,6 @@ class AddProjectPage extends Component {
         }
         console.log(this.state.companyId)
     }
-
 
     handleProjectNameChange = event => {
         this.setState({

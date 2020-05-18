@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
 
 import {Link} from 'react-router-dom'
 import { Container, Button, InputGroup, FormControl, Alert } from 'react-bootstrap'

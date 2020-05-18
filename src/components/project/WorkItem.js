@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
-
-import { Button, Card } from 'react-bootstrap'
-
+import React from 'react'
 
 function ProjectWorkItem(props) {
     const workItem = props.work;
     
-
     return (
         <tr>
             <td>{workItem.taskName}</td>

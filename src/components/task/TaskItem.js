@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
-
-import { Link } from 'react-router-dom'
-import { Container, Row, Col, Button, Form, Card, Modal, ListGroup } from 'react-bootstrap'
-import { ArrowLeft, ArrowRight, Trash, Search } from 'react-bootstrap-icons'
+import { Row, Col, Button, Card, Modal, ListGroup } from 'react-bootstrap'
+import { ArrowLeft, ArrowRight, Trash } from 'react-bootstrap-icons'
 
 
 
@@ -14,8 +12,6 @@ function TaskItem(props) {
 
     const taskItem = props.task;
     const userRole = props.userRole;
-
-    const link = '/task/' + taskItem.id
 
 
     function changeTaskStatus(direction) {
@@ -47,15 +43,15 @@ function TaskItem(props) {
                     <Card.Title>{taskItem.name}</Card.Title>
                     <Card.Text>{taskItem.description.substring(0, 20)}..</Card.Text>
 
-                    {userRole == "admin" &&
+                    {userRole === "admin" &&
                         <Row>
                             <Col>
-                                {taskItem.status != "to do" &&
+                                {taskItem.status !== "to do" &&
                                     <Button onClick={() => changeTaskStatus(false)} variant="outline-success" block><ArrowLeft /></Button>
                                 }
                             </Col>
                             <Col>
-                                {taskItem.status != "done" ?
+                                {taskItem.status !== "done" ?
                                     <Button onClick={() => changeTaskStatus(true)} variant="outline-success" block><ArrowRight /></Button> :
                                     <Button onClick={() => changeTaskStatus(true)} variant="outline-danger" block><Trash /></Button>
                                 }

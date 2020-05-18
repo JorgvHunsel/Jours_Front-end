@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
-
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-
-import '../styling/AddProjectPage.css'
+import '../../styling/AddProjectPage.css'
 
 
 import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap'
-import {Check, Trash} from 'react-bootstrap-icons'
+import { Check, Trash } from 'react-bootstrap-icons'
 
 class EditProjectPage extends Component {
-
-
     constructor(props) {
         super(props)
 
@@ -26,7 +20,7 @@ class EditProjectPage extends Component {
         console.log(this.state.projectId)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getProject()
     }
 
@@ -43,8 +37,8 @@ class EditProjectPage extends Component {
             .then(res => res.json()).catch()
             .then((data) => {
                 console.log(data)
-                 this.setState({ projectName: data.name, endDate: new Date(data.endDate) })
-            
+                this.setState({ projectName: data.name, endDate: new Date(data.endDate) })
+
             })
     }
 
@@ -62,7 +56,7 @@ class EditProjectPage extends Component {
         console.log(this.state.endDate)
     }
 
-    disableProject(){
+    disableProject() {
         console.log(this.state.projectId)
         fetch('http://localhost:8090/project/disable', {
             method: 'PUT',
@@ -116,9 +110,9 @@ class EditProjectPage extends Component {
                 </InputGroup>
                 <br />
                 <div className="form-group">
-                            <label>endDate:</label><br />
-                            <DatePicker minDate={new Date()} strictParsing dateFormat="dd/MM/yyyy" selected={this.state.endDate} onChange={date => this.handleEndDateChange(date)} />
-                        </div>
+                    <label>endDate:</label><br />
+                    <DatePicker minDate={new Date()} strictParsing dateFormat="dd/MM/yyyy" selected={this.state.endDate} onChange={date => this.handleEndDateChange(date)} />
+                </div>
                 <Button variant="primary" onClick={this.handleSubmit} size="lg" block><Check /></Button>
                 <Button variant="danger" onClick={() => this.disableProject()} size="lg" block><Trash /></Button>
             </Container>

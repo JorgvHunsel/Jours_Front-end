@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import Table from 'react-bootstrap/Table';
-import { withRouter, Link, useHistory } from 'react-router-dom';
-
-import CompanyItem from '../components/CompanyOverviewItem';
-import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
-import companyItem from '../components/CompanyOverviewItem';
+import CompanyItem from '../../components/company/OverviewItem';
+import { Row, Col } from 'react-bootstrap';
 
 
 class CompanyOverviewPage extends Component {

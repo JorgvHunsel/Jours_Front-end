@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
+import auth from '../../service/auth'
 
 import { Container, InputGroup, FormControl, Button, ListGroup, Row, Col } from 'react-bootstrap'
 import { Check, ArrowClockwise } from 'react-bootstrap-icons'
 
-class AddCompanyPage extends Component {
+class EditCompanyPage extends Component {
     constructor(props) {
         super(props)
 
@@ -126,4 +125,4 @@ class AddCompanyPage extends Component {
     }
 }
 
-export default AddCompanyPage
+export default EditCompanyPage

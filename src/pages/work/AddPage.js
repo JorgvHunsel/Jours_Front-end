@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
-
 import DatePicker from 'react-datepicker'
-
 import { Dot, Check } from 'react-bootstrap-icons'
-
-import { Row, Container, Col, Button, Dropdown, DropdownButton, Tab, Tabs } from 'react-bootstrap';
+import { Row, Container, Col, Button, Dropdown, Tab, Tabs } from 'react-bootstrap';
 
 class AddWorkPage extends Component {
     constructor(props) {
@@ -86,7 +81,7 @@ class AddWorkPage extends Component {
 
 
     addWork() {
-        if (this.state.selectedTask == '') {
+        if (this.state.selectedTask === '') {
             window.alert("Select a task first")
             return
         }
@@ -157,7 +152,7 @@ class AddWorkPage extends Component {
                                 }
                             </Tab>
 
-                          
+
                             <Tab eventKey="mannually" title="Manually">
                                 <Row><Col><h4>Add work manually:</h4></Col></Row>
                                 <form className="form">
@@ -196,15 +191,9 @@ class AddWorkPage extends Component {
                                 </form>
                             </Tab>
                         </Tabs>
-
-
-
-
-
                     </Container>
                 </div>
             </React.Fragment>
-
         );
     }
 }

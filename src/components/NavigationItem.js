@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import auth from '../service/auth'
 
-import { ListUl, Plus, PersonPlus, PersonFill } from 'react-bootstrap-icons'
+import { ListUl, Plus, PersonPlus } from 'react-bootstrap-icons'
 
 
-class Navigation extends Component {
+class NavigationItem extends Component {
     render() {
         return (
             <Navbar bg="dark" variant="dark" expand="lg">
@@ -33,4 +33,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default NavigationItem;

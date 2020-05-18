@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { withRouter, Link } from 'react-router-dom';
-
-import TaskItem from '../components/TaskItem';
-
-import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
-import { PlusCircle } from 'react-bootstrap-icons'
-import ProjectWorkItem from '../components/ProjectWorkItem';
-
+import { Link } from 'react-router-dom';
+import TaskItem from '../../components/task/TaskItem';
+import { Row, Container, Col, Button } from 'react-bootstrap';
+import ProjectWorkItem from '../../components/project/WorkItem';
 
 class ProjectDetailPage extends Component {
-
     constructor(props) {
         super(props)
 
@@ -71,7 +66,7 @@ class ProjectDetailPage extends Component {
         const filterTasksByStatus = (filterValue) => {
 
             var newtask = tasks.filter((item) => {
-                return item.status == filterValue
+                return item.status === filterValue
             })
             return newtask
 
@@ -114,11 +109,11 @@ class ProjectDetailPage extends Component {
                                 </Table>
                             </Col>
                         </Row>
-                        {userRole == "admin" &&
+                        {userRole === "admin" &&
                             <Link to={{ pathname: '/task/add', state: { companyId, projectId } }}><Button variant="outline-primary" block>New task</Button></Link>
                         }
                     </div>
-                    {userRole == "admin" &&
+                    {userRole === "admin" &&
                         <div>
                             <Row>
                                 <Col><h2>Work log</h2></Col>

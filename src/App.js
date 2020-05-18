@@ -2,24 +2,24 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Navigation from '../src/components/Navigation'
+import NavigationItem from './components/NavigationItem'
 import Login from '../src/pages/LoginPage';
 import Register from '../src/pages/RegisterPage';
 import {LandingPage} from './pages/landingPage'
 import {AppLayout} from './pages/app.layout'
 import {ProtectedRoute} from './service/protected.route'
 
-import AddCompany from './pages/AddCompanyPage'
-import JoinCompany from './pages/JoinCompanyPage'
-import AllCompanies from './pages/CompanyOverviewPage'
-import DetailCompany from './pages/CompanyDetailPage'
-import EmployeeDetail from './pages/DetailEmployeePage'
-import EditCompany from './pages/EditCompanyPage'
-import DetailProject from './pages/ProjectDetailPage'
-import AddProject from './pages/AddProjectPage'
-import EditProject from './pages/EditProjectPage'
-import AddWork from './pages/AddWorkPage'
-import AddTask from './pages/AddTaskPage'
+import AddCompany from './pages/company/AddPage'
+import JoinCompany from './pages/company/JoinPage'
+import AllCompanies from './pages/company/OverviewPage'
+import DetailCompany from './pages/company/DetailPage'
+import EmployeeDetail from './pages/user/DetailPage'
+import EditCompany from './pages/company/EditPage'
+import DetailProject from './pages/project/DetailPage'
+import AddProject from './pages/project/AddPage'
+import EditProject from './pages/project/EditPage'
+import AddWork from './pages/work/AddPage'
+import AddTask from './pages/task/AddPage'
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navigation/>
+        <NavigationItem/>
         <Switch>
         <Route exact path="/" component={LandingPage}/>
         <ProtectedRoute exact path="/app" component={AppLayout}/>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Link } from 'react-router-dom'
 import { Button, Card, Row, Col } from 'react-bootstrap'
 import { BoxArrowInRight, Pencil} from 'react-bootstrap-icons'
 
 
-function ProjectItem(props) {
+function ProjectOverviewItem(props) {
     const projectItem = props.project;
     const role = props.role;
 
@@ -41,7 +41,7 @@ function ProjectItem(props) {
                         <Col>
                             <Link to={projectLink}><Button variant="success" block><BoxArrowInRight/></Button></Link>
                         </Col>
-                        {role == "admin" &&
+                        {role === "admin" &&
                             <Col><Link to={editProjectLink}><Button variant="secondary" block><Pencil/></Button></Link></Col>
                         }
                     </Row>
@@ -54,4 +54,4 @@ function ProjectItem(props) {
     )
 }
 
-export default ProjectItem
+export default ProjectOverviewItem

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { withRouter, Link, useHistory } from 'react-router-dom';
 
-import CompanyItem from '../components/CompanyOverviewItem';
-import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
-import companyItem from '../components/CompanyOverviewItem';
-import EmployeeDetailTask from '../components/EmployeeDetailTaskItem'
-import EmployeeDetailWork from '../components/EmployeeDetailWorkItem'
+import { Row, Container, Col } from 'react-bootstrap';
+import UserDetailTaskItem from '../../components/user/DetailTaskItem'
+import EmployeeDetailWork from '../../components/user/DetailWorkItem'
 
 
-class DetailEmployeePage extends Component {
+class UserDetailPage extends Component {
 
     constructor(props) {
         super(props)
@@ -63,7 +60,7 @@ class DetailEmployeePage extends Component {
                         </thead>
                         <tbody>
                         {taskList.map((task) => (
-                        <EmployeeDetailTask key={task.id} task={task}></EmployeeDetailTask>
+                        <UserDetailTaskItem key={task.id} task={task}></UserDetailTaskItem>
                     ))}
                     </tbody>
                     </Table>
@@ -91,4 +88,4 @@ class DetailEmployeePage extends Component {
 
 }
 
-export default DetailEmployeePage
+export default UserDetailPage

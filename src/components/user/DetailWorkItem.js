@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
-
-import { Button, Card } from 'react-bootstrap'
+import React from 'react'
 
 
-function EmployeeDetailWorkItem(props) {
+function UserDetailWorkItem(props) {
     const workItem = props.work;
-
 
     return (
         <tr>
@@ -16,4 +13,4 @@ function EmployeeDetailWorkItem(props) {
     )
 }
 
-export default EmployeeDetailWorkItem
+export default UserDetailWorkItem

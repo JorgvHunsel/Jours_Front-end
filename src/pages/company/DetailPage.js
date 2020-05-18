@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import ProjectItem from '../components/ProjectOverviewItem';
-import EmployeeItem from '../components/EmployeeOverviewItem';
-import { Row, Container, Col, Button, CardColumns, CardDeck } from 'react-bootstrap';
-import {PlusCircle} from 'react-bootstrap-icons'
+import ProjectOverviewItem from '../../components/project/OverviewItem';
+import UserOverviewItem from '../../components/user/OverviewItem';
+import { Row, Container, Col, Button, CardColumns } from 'react-bootstrap';
 
 
 class CompanyDetailPage extends Component {
 
     constructor(props) {
         super(props)
-
 
         this.state = {
             projects: [],
@@ -70,10 +68,10 @@ class CompanyDetailPage extends Component {
                         <Row><Col><h2>Projects</h2></Col></Row>
                         <CardColumns>
                             {projects.map((item) => (
-                                <ProjectItem companyId={this.state.companyId} key={item.id} project={item} role={userRole} />
+                                <ProjectOverviewItem companyId={this.state.companyId} key={item.id} project={item} role={userRole} />
                             ))}
                         </CardColumns>
-                        {userRole == "admin" &&
+                        {userRole === "admin" &&
                         <Link to={{ pathname: '/project/create', state: { companyId } }}><Button variant="outline-primary" size="sm" block>New project</Button></Link>
                         }
                 </div>
@@ -91,7 +89,7 @@ class CompanyDetailPage extends Component {
                             </thead>
                             <tbody>
                                 {employees.map((item) => (
-                                    <EmployeeItem key={item.id} employee={item} />
+                                    <UserOverviewItem key={item.id} employee={item} />
                                 ))}
                             </tbody>
                         </Table>

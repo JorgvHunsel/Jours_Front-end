@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-
 import { Container, Button, InputGroup, FormControl, Alert, Dropdown, Row, Col, ListGroup } from 'react-bootstrap'
 import { Check, Dot } from 'react-bootstrap-icons'
-
-import EmployeeTask from '../components/EmployeeTaskItem'
+import EmployeeTask from '../../components/user/EmployeeTaskItem'
 
 
 class AddTaskPage extends Component {
@@ -58,7 +55,7 @@ class AddTaskPage extends Component {
         this.setState({ 
             selectedEmployees: this.state.selectedEmployees.concat(employee), 
             allEmployees: this.state.allEmployees.filter(function(emp) {
-                return emp != employee
+                return emp !== employee
             })})
     }
     
@@ -66,7 +63,7 @@ class AddTaskPage extends Component {
         this.setState({ 
             allEmployees: this.state.allEmployees.concat(employee), 
             selectedEmployees: this.state.selectedEmployees.filter(function(emp) {
-                return emp != employee
+                return emp !== employee
             })})
     }
 

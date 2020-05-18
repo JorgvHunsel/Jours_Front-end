@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import auth from '../service/auth'
-import jwt from 'jsonwebtoken'
-
+import auth from '../../service/auth'
 import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { Check } from 'react-bootstrap-icons'
 

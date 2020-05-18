@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {Link } from 'react-router-dom'
-import { Button, Card } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 
-function EmployeeItem(props) {
+function UserOverviewItem(props) {
     const EmployeeItem = props.employee;
 
     const link = "/employee/" + EmployeeItem.id
@@ -17,4 +17,4 @@ function EmployeeItem(props) {
     )
 }
 
-export default EmployeeItem
+export default UserOverviewItem
