@@ -61,7 +61,7 @@ class AddTaskPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         CreateTask(this.state.name, this.state.description, this.state.projectId, this.state.selectedEmployees).then(()=>{
-            window.alert("succes")
+            this.props.history.push('/company/' + this.state.companyId + '/project/' + this.state.projectId)
         })
     }
 

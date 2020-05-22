@@ -52,7 +52,7 @@ class EditProjectPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        EditProject(this.state.projectId).then(()=>{
+        EditProject(this.state.projectId, this.state.projectName, this.state.endDate, this.state.companyId).then(()=>{
             this.props.history.push('/company/' + this.state.companyId)
         })
     }

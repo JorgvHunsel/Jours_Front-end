@@ -21,7 +21,11 @@ class NavigationItem extends Component {
                             <NavDropdown.Item href="/company/create"><Plus></Plus> Create</NavDropdown.Item>
                             <NavDropdown.Item href="/company/join"><PersonPlus></PersonPlus> Join</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link href="/work/add">Add work</Nav.Link>
+
+                        <NavDropdown title="Work" id="basic-nav-dropdown">
+                            <NavDropdown.Item href={"/employee/" + window.sessionStorage.getItem("userId")}><ListUl></ListUl> Overview</NavDropdown.Item>
+                            <NavDropdown.Item href="/work/add"><Plus></Plus> Add</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                     {window.sessionStorage.getItem("userToken") == null ?
                         <Link to="/login"><Button variant="outline-info">Login</Button></Link> :

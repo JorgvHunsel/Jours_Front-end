@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import DatePicker from 'react-datepicker'
 import { Dot, Check } from 'react-bootstrap-icons'
 import { Row, Container, Col, Button, Dropdown, Tab, Tabs } from 'react-bootstrap';
-import { GetUnfinishedWork } from '../../service/api/work'
-import { GetTasksFromuser, UpdateWork, AddWork } from '../../service/api/user'
+import { GetUnfinishedWork, UpdateWork, AddWork } from '../../service/api/work'
+import { GetTasksFromuser } from '../../service/api/user'
 
 class AddWorkPage extends Component {
     constructor(props) {

@@ -31,7 +31,7 @@ class AddProjectPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        CreateProject().then(()=>{
+        CreateProject(this.state.projectName, this.state.endDate, this.state.companyId).then(()=>{
             this.props.history.push('/company/' + this.state.companyId)
         })
     }

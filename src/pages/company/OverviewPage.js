@@ -18,7 +18,7 @@ class CompanyOverviewPage extends Component {
     }
 
     getCompanies() {
-        GetCompaniesFromUser(this.state.userId).then((data) => {
+        GetCompaniesFromUser().then((data) => {
             if (data.length === 0) {
                 this.handleEmptyCompanies()
             }

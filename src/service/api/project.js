@@ -29,8 +29,8 @@ export async function GetProjects(companyId) {
 }
 
 export async function CreateProject(projectName, endDate, companyId) {
-    return fetch('http://localhost:8090/project/create', {
-        method: 'POST',
+    return fetch('http://localhost:8090/project', {
+        method: 'PUT',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
