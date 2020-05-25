@@ -34,8 +34,8 @@ export async function Register(username, password){
             });
 }
 
-export async function GetUser(){
-    return fetch('http://localhost:8090/user', {
+export async function GetUser(userId){
+    return fetch('http://localhost:8090/user?userId=' + userId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

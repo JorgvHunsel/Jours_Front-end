@@ -24,7 +24,7 @@ class UserDetailPage extends Component {
     }
 
     getUser() {
-        GetUser().then((data)=>{
+        GetUser(this.state.userId).then((data)=>{
             this.setState({username: data.username, taskList: data.tasks, workList: data.workList})
         })
     }

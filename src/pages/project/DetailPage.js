@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Table from 'react-bootstrap/Table';
 import { Link } from 'react-router-dom';
 import TaskItem from '../../components/task/TaskItem';
-import { Row, Container, Col, Button } from 'react-bootstrap';
+import { Row, Container, Col, Button, Alert } from 'react-bootstrap';
 import ProjectWorkItem from '../../components/project/WorkItem';
 import { GetCompany } from '../../service/api/company'
 import { GetProject } from '../../service/api/project'
@@ -18,7 +18,8 @@ class ProjectDetailPage extends Component {
             userRole: '',
             tasks: [],
             workList: [],
-            showDetail: false
+            showDetail: false,
+            overBudget: ''
         }
 
         this.getUserRole()
@@ -32,8 +33,8 @@ class ProjectDetailPage extends Component {
     }
 
     getProject() {
-        GetProject(this.state.projectId).then((data)=>{
-            this.setState({ tasks: data.tasks, workList: data.workList })
+        GetProject(this.state.projectId).then((data) => {
+            this.setState({ tasks: data.tasks, workList: data.workList, overBudget: data.overBudget })
         })
     }
 
@@ -53,64 +54,66 @@ class ProjectDetailPage extends Component {
                 <Container>
                     <div>
                         <Row ><Col><h1>Project detail</h1></Col></Row>
+                        {this.state.overBudget &&
+                            <Row><Col><Alert variant="danger">This project is over budget</Alert></Col></Row>}
                         <Row>
-                            <Col>
-                                <Table>
-                                    <thead><tr><th>To do</th></tr></thead>
-                                    <tbody>
-                                        {filterTasksByStatus("to do").map((item) => (
-                                            <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                            <Col>
-                                <Table>
-                                    <thead><tr><th>Doing</th></tr></thead>
-                                    <tbody>
-                                        {filterTasksByStatus("doing").map((item) => (
-                                           <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                            <Col>
-                                <Table>
-                                    <thead><tr><th>Done</th></tr></thead>
-                                    <tbody>
-                                        {filterTasksByStatus("done").map((item) => (
-                                            <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </Col>
-                        </Row>
-                        {userRole === "admin" &&
-                            <Link to={{ pathname: '/task/add', state: { companyId, projectId } }}><Button variant="outline-primary" block>New task</Button></Link>
-                        }
-                    </div>
+                        <Col>
+                            <Table>
+                                <thead><tr><th>To do</th></tr></thead>
+                                <tbody>
+                                    {filterTasksByStatus("to do").map((item) => (
+                                        <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col>
+                            <Table>
+                                <thead><tr><th>Doing</th></tr></thead>
+                                <tbody>
+                                    {filterTasksByStatus("doing").map((item) => (
+                                        <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                        <Col>
+                            <Table>
+                                <thead><tr><th>Done</th></tr></thead>
+                                <tbody>
+                                    {filterTasksByStatus("done").map((item) => (
+                                        <TaskItem key={item.id} userRole={userRole} update={() => this.getProject()} task={item} />
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
                     {userRole === "admin" &&
-                        <div>
-                            <Row>
-                                <Col><h2>Work log</h2></Col>
-                                <Table variant="dark">
-                                    <thead>
-                                        <tr>
-                                            <th>Task</th>
-                                            <th>Name</th>
-                                            <th>Begin date</th>
-                                            <th>End date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {workList.map((item) => (
-                                            <ProjectWorkItem key={item.id} work={item} />
-                                        ))}
-                                    </tbody>
-                                </Table>
-                            </Row>
-                        </div>
+                        <Link to={{ pathname: '/task/add', state: { companyId, projectId } }}><Button variant="outline-primary" block>New task</Button></Link>
                     }
+                    </div>
+                {userRole === "admin" &&
+                    <div>
+                        <Row>
+                            <Col><h2>Work log</h2></Col>
+                            <Table variant="dark">
+                                <thead>
+                                    <tr>
+                                        <th>Task</th>
+                                        <th>Name</th>
+                                        <th>Begin date</th>
+                                        <th>End date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {workList.map((item) => (
+                                        <ProjectWorkItem key={item.id} work={item} />
+                                    ))}
+                                </tbody>
+                            </Table>
+                        </Row>
+                    </div>
+                }
                 </Container>
             </React.Fragment >
         )
