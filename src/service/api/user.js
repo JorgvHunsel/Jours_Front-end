@@ -1,6 +1,6 @@
 
 export async function Login(username, password) {
-    return fetch('http://localhost:8090/authenticate', {
+    return fetch('https://joursapp.herokuapp.com/authenticate', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -18,7 +18,7 @@ export async function Login(username, password) {
 
 
 export async function Register(username, password){
-    return fetch('http://localhost:8090/register', {
+    return fetch('https://joursapp.herokuapp.com/register', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -35,7 +35,7 @@ export async function Register(username, password){
 }
 
 export async function GetUser(userId){
-    return fetch('http://localhost:8090/user?userId=' + userId, {
+    return fetch('https://joursapp.herokuapp.com/user?userId=' + userId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -50,7 +50,7 @@ export async function GetUser(userId){
 }
 
 export async function GetCompaniesFromUser(){
-    return fetch('http://localhost:8090/user/company', {
+    return fetch('https://joursapp.herokuapp.com/user/company', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -65,7 +65,7 @@ export async function GetCompaniesFromUser(){
 }
 
 export async function GetTasksFromuser(){
-    return fetch('http://localhost:8090/user/tasks', {
+    return fetch('https://joursapp.herokuapp.com/user/tasks', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

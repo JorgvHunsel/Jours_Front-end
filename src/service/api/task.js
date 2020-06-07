@@ -1,5 +1,5 @@
 export async function CreateTask(name, description, projectId, selectedEmployees){
-    return fetch('http://localhost:8090/task/create', {
+    return fetch('https://joursapp.herokuapp.com/task/create', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -19,7 +19,7 @@ export async function CreateTask(name, description, projectId, selectedEmployees
 }
 
 export async function ChangeTaskStatus(taskItemId, taskItemStatus, direction){
-    return fetch('http://localhost:8090/task/status', {
+    return fetch('https://joursapp.herokuapp.com/task/status', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

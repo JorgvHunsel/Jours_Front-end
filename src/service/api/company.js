@@ -1,5 +1,5 @@
 export async function CreateCompany(companyName){
-    return fetch('http://localhost:8090/company/create', {
+    return fetch('https://joursapp.herokuapp.com/company/create', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -16,7 +16,7 @@ export async function CreateCompany(companyName){
 }
 
 export async function GetCompany(companyId){
-    return fetch('http://localhost:8090/company?companyId=' + companyId, {
+    return fetch('https://joursapp.herokuapp.com/company?companyId=' + companyId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -31,7 +31,7 @@ export async function GetCompany(companyId){
 }
 
 export async function EditCompany(companyId, companyName, employees){
-    return fetch('http://localhost:8090/company/edit', {
+    return fetch('https://joursapp.herokuapp.com/company/edit', {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -50,7 +50,7 @@ export async function EditCompany(companyId, companyName, employees){
 }
 
 export async function JoinCompany(companyCode){
-    return fetch('http://localhost:8090/company/join', {
+    return fetch('https://joursapp.herokuapp.com/company/join', {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -67,7 +67,7 @@ export async function JoinCompany(companyCode){
 }
 
 export async function UpdateCompanyCode(companyId){
-    return fetch('http://localhost:8090/company/code?companyId=' + companyId, {
+    return fetch('https://joursapp.herokuapp.com/company/code?companyId=' + companyId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

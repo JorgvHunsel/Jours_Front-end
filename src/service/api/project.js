@@ -1,5 +1,5 @@
 export async function GetProject(projectId) {
-    return fetch('http://localhost:8090/project/?projectId=' + projectId, {
+    return fetch('https://joursapp.herokuapp.com/project/?projectId=' + projectId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -14,7 +14,7 @@ export async function GetProject(projectId) {
 }
 
 export async function GetProjects(companyId) {
-    return fetch('http://localhost:8090/project/all?companyId=' + companyId, {
+    return fetch('https://joursapp.herokuapp.com/project/all?companyId=' + companyId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -29,7 +29,7 @@ export async function GetProjects(companyId) {
 }
 
 export async function CreateProject(projectName, endDate, companyId) {
-    return fetch('http://localhost:8090/project', {
+    return fetch('https://joursapp.herokuapp.com/project', {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -48,7 +48,7 @@ export async function CreateProject(projectName, endDate, companyId) {
 }
 
 export async function DisableProject(projectId){
-    return fetch('http://localhost:8090/project/disable?projectId=' + projectId, {
+    return fetch('https://joursapp.herokuapp.com/project/disable?projectId=' + projectId, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -62,7 +62,7 @@ export async function DisableProject(projectId){
 }
 
 export async function EditProject(projectId, projectName, endDate, companyId){
-    return fetch('http://localhost:8090/project', {
+    return fetch('https://joursapp.herokuapp.com/project', {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',

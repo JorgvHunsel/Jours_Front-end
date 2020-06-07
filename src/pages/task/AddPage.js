@@ -49,6 +49,8 @@ class AddTaskPage extends Component {
                 return emp !== employee
             })})
     }
+
+
     
     removeEmployee(employee) {
         this.setState({ 
@@ -113,3 +115,4 @@ class AddTaskPage extends Component {
 }
 
 export default AddTaskPage
+export function handleAddEmployee(employee){}

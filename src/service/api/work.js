@@ -1,5 +1,5 @@
 export async function AddWork(selectedTaskId, beginDate, endDate){
-    return fetch('http://localhost:8090/work', {
+    return fetch('https://joursapp.herokuapp.com/work', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -18,7 +18,7 @@ export async function AddWork(selectedTaskId, beginDate, endDate){
 }
 
 export async function GetUnfinishedWork(){
-    return fetch('http://localhost:8090/work', {
+    return fetch('https://joursapp.herokuapp.com/work', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -33,7 +33,7 @@ export async function GetUnfinishedWork(){
 }
 
 export async function UpdateWork(unfinishedWorkId){
-    return fetch('http://localhost:8090/work', {
+    return fetch('https://joursapp.herokuapp.com/work', {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
